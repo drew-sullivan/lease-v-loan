@@ -7,7 +7,7 @@ const TIME_PERIOD = 20;
 const LOANS_UNDERTAKEN = 2;
 
 export interface Year {
-  num: number | string;
+  year: number | string;
   jan: number;
   feb: number;
   mar: number;
@@ -29,7 +29,9 @@ export interface Year {
 })
 export class ResultsComponent implements OnInit {
 
-  private displayedColumns = ['num', 'jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  private displayedColumns = [
+    'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',
+    'july', 'aug', 'sep', 'oct', 'nov', 'dec'];
   private leaseMonthlyPrice: number;
   private savingForNextLease: number;
   private leaseYearlyPrice: number;
@@ -72,8 +74,8 @@ export class ResultsComponent implements OnInit {
     while (j <= TIME_PERIOD * 12) {
       const leaseData = leaseChartData.slice(i, j);
       const loanData = loanChartData.slice(i, j);
-      tableData.push(Object.assign({}, ...months.map((m, index) => ({num: k, [m]: loanData[index]}))));
-      tableData.push(Object.assign({}, ...months.map((m, index) => ({num: '', [m]: leaseData[index]}))));
+      tableData.push(Object.assign({}, ...months.map((m, index) => ({year: k, [m]: loanData[index]}))));
+      tableData.push(Object.assign({}, ...months.map((m, index) => ({year: '', [m]: leaseData[index]}))));
       i += 12;
       j += 12;
       k += 1;
@@ -94,6 +96,10 @@ export class ResultsComponent implements OnInit {
       tempLoanTotalAmount -= this.loanMonthlyPrice;
     }
     return loanChartData.concat(loanChartData);
+  }
+
+  yell(): void {
+    console.log(`YOU CLICKED ME!`);
   }
 
 }

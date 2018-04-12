@@ -1,39 +1,24 @@
 <mat-card>
-  <p>LEASE MONTHLY PRICE: {{ leaseMonthlyPrice }}</p>
-  <p>SAVING FOR NEXT LEASE:  {{ savingForNextLease }}</p>
-  <p>LEASE YEARLY PRICE: {{ leaseYearlyPrice }}</p>
-  <p>LEASE TOTAL COST: {{ leaseTotalCost }}</p>
-  <p>LIFESTYLE TOTAL COST FOR LEASEING: {{ lifestyleTotalCostForLeasing }}</p>
-  <p>LOAN MONTHLY PRICE: {{ loanMonthlyPrice }}</p>
-  <p>LOAN YEARLY PRICE: {{ loanYearlyPrice }}</p>
-  <p>LOAN TOTAL COST: {{ loanTotalCost }}</p>
-  <p>LIFESTYLE TOTAL COST FOR LOAN: {{ lifestyleTotalCostForLoan }}</p>
+  <p>LEASE MONTHLY PRICE: {{ leaseMonthlyPrice | currency:'USD':'symbol-narrow':'.0' }}</p>
+  <p>SAVING FOR NEXT LEASE:  {{ savingForNextLease | currency:'USD':'symbol-narrow':'.0'  }}</p>
+  <p>LEASE YEARLY PRICE: {{ leaseYearlyPrice | currency:'USD':'symbol-narrow':'.0'  }}</p>
+  <p>LEASE TOTAL COST: {{ leaseTotalCost | currency:'USD':'symbol-narrow':'.0'  }}</p>
+  <p>LIFESTYLE TOTAL COST FOR LEASEING: {{ lifestyleTotalCostForLeasing | currency:'USD':'symbol-narrow':'.0'  }}</p>
+  <p>LOAN MONTHLY PRICE: {{ loanMonthlyPrice | currency:'USD':'symbol-narrow':'.0'  }}</p>
+  <p>LOAN YEARLY PRICE: {{ loanYearlyPrice | currency:'USD':'symbol-narrow':'.0'  }}</p>
+  <p>LOAN TOTAL COST: {{ loanTotalCost | currency:'USD':'symbol-narrow':'.0'  }}</p>
+  <p>LIFESTYLE TOTAL COST FOR LOAN: {{ lifestyleTotalCostForLoan | currency:'USD':'symbol-narrow':'.0'  }}</p>
 </mat-card>
 
 <div class="example-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource">
 
     <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
-      <mat-header-cell  *matHeaderCellDef> {{ col }}</mat-header-cell>
-      <mat-cell  *matCellDef="let row"> {{row[col]}} </mat-cell>
+      <mat-header-cell  *matHeaderCellDef>{{ col | uppercase }}</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ col === 'year' ? row[col] : row[col] | currency:'USD':'symbol-narrow':'.0' }}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let myRowData; columns: displayedColumns"></mat-row>
   </mat-table>
 </div>
-
-
-<!-- <mat-card>
-  <ul>YEARLY DATA
-    <li *ngFor="let year of yearlyData; let i = index" [attr.data-index]="i">
-      <div class="year-col">
-        <ul>YEAR {{ i + 1 }}
-          <li *ngFor="let month of year; let j = index" [attr.data-index]="j">
-            {{ months[j] }}: {{ month[0] }}, {{ month[1] }}
-          </li>
-        </ul>
-      </div>
-    </li>
-  </ul>
-</mat-card> -->
