@@ -1,0 +1,25 @@
+<p>LEASE MONTHLY PRICE: {{ leaseMonthlyPrice }}</p>
+<p>SAVING FOR NEXT LEASE:  {{ savingForNextLease }}</p>
+<p>LEASE YEARLY PRICE: {{ leaseYearlyPrice }}</p>
+<p>LEASE TOTAL COST: {{ leaseTotalCost }}</p>
+<p>LIFESTYLE TOTAL COST FOR LEASEING: {{ lifestyleTotalCostForLeasing }}</p>
+<p>LOAN MONTHLY PRICE: {{ loanMonthlyPrice }}</p>
+<p>LOAN YEARLY PRICE: {{ loanYearlyPrice }}</p>
+<p>LOAN TOTAL COST: {{ loanTotalCost }}</p>
+<p>LIFESTYLE TOTAL COST FOR LOAN: {{ lifestyleTotalCostForLoan }}</p>
+
+<ul>DATA
+  <li *ngFor="let dp of monthlyData">{{ dp[0] }}, {{ dp[1] }}</li>
+</ul>
+
+<ul>YEARLY DATA
+  <li *ngFor="let year of yearlyData; let i = index" [attr.data-index]="i">
+    <ul>YEAR {{ i + 1 }}
+      <li *ngFor="let month of year; let j = index" [attr.data-index]="j">
+        MONTH {{ j + 1 }}: {{ month[0] }}, {{ month[1] }}
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
