@@ -12,58 +12,12 @@
 
 <div class="example-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="num">
-      <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.num}} </mat-cell>
+
+    <ng-container *ngFor="let col of displayedColumns" matColumnDef={{col}}>
+      <mat-header-cell  *matHeaderCellDef> {{ col }}</mat-header-cell>
+      <mat-cell  *matCellDef="let row"> {{row[col]}} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="jan">
-      <mat-header-cell *matHeaderCellDef> Jan </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.jan}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="feb">
-      <mat-header-cell *matHeaderCellDef> Feb </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.feb}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="mar">
-      <mat-header-cell *matHeaderCellDef> Mar </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.mar}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="apr">
-      <mat-header-cell *matHeaderCellDef> Apr </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.apr}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="may">
-      <mat-header-cell *matHeaderCellDef> May </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.may}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="june">
-      <mat-header-cell *matHeaderCellDef> June </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.june}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="july">
-      <mat-header-cell *matHeaderCellDef> July </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.july}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="aug">
-      <mat-header-cell *matHeaderCellDef> Aug </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.aug}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="sep">
-      <mat-header-cell *matHeaderCellDef> Sep </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.sep}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="oct">
-      <mat-header-cell *matHeaderCellDef> Oct </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.oct}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="nov">
-      <mat-header-cell *matHeaderCellDef> Nov </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.nov}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="dec">
-      <mat-header-cell *matHeaderCellDef> Dec </mat-header-cell>
-      <mat-cell *matCellDef="let year"> {{year.dec}} </mat-cell>
-    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let myRowData; columns: displayedColumns"></mat-row>
   </mat-table>

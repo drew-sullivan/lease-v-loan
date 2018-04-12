@@ -29,7 +29,7 @@ export interface Year {
 })
 export class ResultsComponent implements OnInit {
 
-  private displayedColumns = ['num', 'jan', 'feb', 'mar', 'apr,', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  private displayedColumns = ['num', 'jan', 'feb', 'mar', 'apr', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'];
   private leaseMonthlyPrice: number;
   private savingForNextLease: number;
   private leaseYearlyPrice: number;
@@ -45,7 +45,6 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
-    console.log(this.dataSource);
   }
 
   loadData(): void {
@@ -78,9 +77,7 @@ export class ResultsComponent implements OnInit {
       i += 12;
       j += 12;
       k += 1;
-      // console.log(k);
     }
-    // console.log(this.YEAR_DATA);
     return tableData;
   }
 
