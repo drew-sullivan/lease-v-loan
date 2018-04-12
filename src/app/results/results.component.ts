@@ -6,6 +6,22 @@ import { CARS } from '../mock-cars';
 const TIME_PERIOD = 20;
 const LOANS_UNDERTAKEN = 2;
 
+export interface Year {
+  num: number | string;
+  jan: number;
+  feb: number;
+  mar: number;
+  apr: number;
+  may: number;
+  june: number;
+  july: number;
+  aug: number;
+  sep: number;
+  oct: number;
+  nov: number;
+  dec: number;
+}
+
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
@@ -13,6 +29,7 @@ const LOANS_UNDERTAKEN = 2;
 })
 export class ResultsComponent implements OnInit {
 
+  private displayedColumns = ['num', 'jan', 'feb', 'mar', 'apr,', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'];
   private leaseMonthlyPrice: number;
   private savingForNextLease: number;
   private leaseYearlyPrice: number;
@@ -22,13 +39,13 @@ export class ResultsComponent implements OnInit {
   private loanYearlyPrice: number;
   private loanTotalCost: number;
   private lifestyleTotalCostForLoan: number;
-  private monthlyData: number[][];
-  private yearlyData: number[][][];
+  private dataSource = [];
 
   constructor() { }
 
   ngOnInit() {
     this.loadData();
+    console.log(this.dataSource);
   }
 
   loadData(): void {
@@ -42,27 +59,29 @@ export class ResultsComponent implements OnInit {
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
     this.loanTotalCost = Math.round(this.loanYearlyPrice * rav4.loanTermLength);
     this.lifestyleTotalCostForLoan = Math.round(this.loanTotalCost * LOANS_UNDERTAKEN);
-    this.monthlyData = this.getMonthlyData();
-    this.yearlyData = this.getYearlyData();
+    this.dataSource = this.getTableData();
   }
 
-  getYearlyData(): number[][][] {
-    const yearlyData = [];
-    const temp_monthlyData = this.monthlyData;
-    let i = 0;
-    let j = 12;
-    while (j <= TIME_PERIOD * 12) {
-      yearlyData.push(temp_monthlyData.slice(i, j));
-      i += 12;
-      j += 12;
-    }
-    return yearlyData;
-  }
-
-  getMonthlyData(): number[][] {
+  getTableData(): any[] {
+    const tableData = [];
+    const months = this.displayedColumns.slice(1);
     const leaseChartData = new Array(TIME_PERIOD * 12).fill(Math.round(this.leaseMonthlyPrice + this.savingForNextLease));
     const loanChartData = this.getLoanChartData();
-    return loanChartData.map((loanChartDataPoint, i) => [loanChartDataPoint, leaseChartData[i]]);
+    let i = 0;
+    let j = 12;
+    let k = 1;
+    while (j <= TIME_PERIOD * 12) {
+      const leaseData = leaseChartData.slice(i, j);
+      const loanData = loanChartData.slice(i, j);
+      tableData.push(Object.assign({}, ...months.map((m, index) => ({num: k, [m]: loanData[index]}))));
+      tableData.push(Object.assign({}, ...months.map((m, index) => ({num: '', [m]: leaseData[index]}))));
+      i += 12;
+      j += 12;
+      k += 1;
+      // console.log(k);
+    }
+    // console.log(this.YEAR_DATA);
+    return tableData;
   }
 
   getLoanChartData(): number[] {
