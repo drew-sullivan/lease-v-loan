@@ -1,0 +1,20 @@
+.mat-row:nth-child(even) {
+    background-color: #FF85AE;
+}
+
+.mat-row:nth-child(odd) {
+    background-color: #8C97D2;
+}
+
+.key-1 {
+    background-color: #FF85AE !important;
+}
+
+.key-2 {
+    background-color: #8C97D2 !important;
+    margin-left: 10px;
+}
+
+mat-toolbar p {
+    font-size: 12px;
+}
