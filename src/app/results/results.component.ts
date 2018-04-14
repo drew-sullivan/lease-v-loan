@@ -25,14 +25,14 @@ export class ResultsComponent implements OnInit {
   private loanYearlyPrice: number;
   private loanTotalCost: number;
   private lifestyleTotalCostForLoan: number;
-  private loanNewCars: number;
+  private numNewCarLoans: number;
 
   private leaseMonthlyPrice: number;
   private savingForNextLease: number;
   private leaseYearlyPrice: number;
   private leaseTotalCost: number;
   private lifestyleTotalCostForLeasing: number;
-  private leaseNewCars: number;
+  private numNewCarLeases: number;
 
   private timePeriod = TIME_PERIOD;
   private dataSource = [];
@@ -48,14 +48,16 @@ export class ResultsComponent implements OnInit {
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
     this.loanTotalCost = Math.round(this.loanYearlyPrice * this.car.loanTermLength);
     this.lifestyleTotalCostForLoan = Math.round(this.loanTotalCost * this.loansUndertaken);
-    this.loanNewCars = Math.round((TIME_PERIOD / this.car.leaseTermLength * 10)) / 10;
+    this.numNewCarLoans = this.loansUndertaken;
+    // console.log(this.numNewCarLoans);
 
     this.leaseMonthlyPrice = this.car.leaseDeal;
     this.savingForNextLease = Math.round(this.car.downPayment / (this.car.leaseTermLength * 12));
     this.leaseYearlyPrice = Math.round((this.leaseMonthlyPrice + this.savingForNextLease) * 12);
     this.leaseTotalCost = Math.round(this.leaseYearlyPrice * this.car.leaseTermLength);
     this.lifestyleTotalCostForLeasing = Math.round(TIME_PERIOD * this.leaseYearlyPrice);
-    this.leaseNewCars = Math.round((TIME_PERIOD / this.car.loanTermLength * 10 )) / 10;
+    this.numNewCarLeases = Math.round((TIME_PERIOD / this.car.leaseTermLength * 10 )) / 10;
+    console.log(this.numNewCarLeases);
 
     this.dataSource = this.getTableData();
   }
