@@ -1,59 +1,63 @@
-<app-car-form (car)="printCar($event)"></app-car-form>
+<app-car-form (car)="setCar($event)"></app-car-form>
 
-<mat-card>
-  <mat-card-content>
-    <mat-tab-group class="demo-tab-group">
-      <mat-tab label="Lease">
-        <div class="demo-tab-content">
-          <mat-list role="list">
-            <mat-list-item role="listitem">LEASE MONTHLY PRICE: {{ leaseMonthlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">SAVING FOR NEXT LEASE:  {{ savingForNextLease | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">LEASE YEARLY PRICE: {{ leaseYearlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">LEASE TOTAL COST: {{ leaseTotalCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">LIFESTYLE TOTAL COST FOR LEASEING: {{ lifestyleTotalCostForLeasing | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">NEW CARS OVER {{ timePeriod }} YEARS: {{ loanNewCars }}</mat-list-item>
-          </mat-list>
-        </div>
-      </mat-tab>
-      <mat-tab label="Loan">
-        <div class="demo-tab-content">
-          <mat-list role="list">
-            <mat-list-item role="listitem">LOAN MONTHLY PRICE: {{ loanMonthlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">LOAN YEARLY PRICE: {{ loanYearlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">LOAN TOTAL COST: {{ loanTotalCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">LIFESTYLE TOTAL COST FOR LOAN: {{ lifestyleTotalCostForLoan | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item role="listitem">NEW CARS OVER {{ timePeriod }} YEARS: {{ leaseNewCars }}</mat-list-item>
-          </mat-list>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+<div *ngIf="car">
 
-<div class="example-container mat-elevation-z8">
-  <mat-toolbar>
-    <button mat-raised-button disabled class="key-1">&nbsp;</button>
-    <p>&nbsp;= Loan</p>
-    <button mat-raised-button disabled class="key-2">&nbsp;</button>
-    <p>&nbsp;= Lease</p>
-  </mat-toolbar>
-  <mat-table #table [dataSource]="dataSource">
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group class="demo-tab-group">
+        <mat-tab label="Lease">
+          <div class="demo-tab-content">
+            <mat-list role="list">
+              <mat-list-item role="listitem">LEASE MONTHLY PRICE: {{ leaseMonthlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">SAVING FOR NEXT LEASE:  {{ savingForNextLease | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">LEASE YEARLY PRICE: {{ leaseYearlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">LEASE TOTAL COST: {{ leaseTotalCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">LIFESTYLE TOTAL COST FOR LEASEING: {{ lifestyleTotalCostForLeasing | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">NEW CARS OVER {{ timePeriod }} YEARS: {{ loanNewCars }}</mat-list-item>
+            </mat-list>
+          </div>
+        </mat-tab>
+        <mat-tab label="Loan">
+          <div class="demo-tab-content">
+            <mat-list role="list">
+              <mat-list-item role="listitem">LOAN MONTHLY PRICE: {{ loanMonthlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">LOAN YEARLY PRICE: {{ loanYearlyPrice | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">LOAN TOTAL COST: {{ loanTotalCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">LIFESTYLE TOTAL COST FOR LOAN: {{ lifestyleTotalCostForLoan | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item role="listitem">NEW CARS OVER {{ timePeriod }} YEARS: {{ leaseNewCars }}</mat-list-item>
+            </mat-list>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
 
-    <ng-container *ngFor="let col of displayedColumns; let i = index" matColumnDef={{col}}>
-      <mat-header-cell *matHeaderCellDef>{{ col | uppercase }}</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ col === 'year' ? row[col] : row[col] | currency:'USD':'symbol-narrow':'.0' }}</mat-cell>
-    </ng-container>
+  <div class="example-container mat-elevation-z8">
+    <mat-toolbar>
+      <button mat-raised-button disabled class="key-1">&nbsp;</button>
+      <p>&nbsp;= Loan</p>
+      <button mat-raised-button disabled class="key-2">&nbsp;</button>
+      <p>&nbsp;= Lease</p>
+    </mat-toolbar>
+    <mat-table #table [dataSource]="dataSource">
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let myRowData; columns: displayedColumns"></mat-row>
-  </mat-table>
+      <ng-container *ngFor="let col of displayedColumns; let i = index" matColumnDef={{col}}>
+        <mat-header-cell *matHeaderCellDef>{{ col | uppercase }}</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ col === 'year' ? row[col] : row[col] | currency:'USD':'symbol-narrow':'.0' }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let myRowData; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+
 </div>

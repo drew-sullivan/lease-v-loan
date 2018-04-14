@@ -6,5 +6,6 @@ export const CARS: Car[] = [
         downPayment: 2000,
         loanTermLength: 6,
         leaseTermLength: 3,
+        leaseDeal: 220
     },
 ];

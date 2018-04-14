@@ -29,7 +29,7 @@ export class CarFormComponent implements OnInit {
     this.downPaymentOptions = getDownPaymentOptions();
     this.loanTermOptions = Array.from({length: 11}, (x, i) => i);
     this.leaseTermOptions = Array.from({length: 11}, (x, i) => i);
-    this.leaseDealOptions = Array.from ({length: 21}, (x, i) => i);
+    this.leaseDealOptions = getLeaseDealOptions();
   }
 
   onSubmit(carForm: any) {
@@ -64,4 +64,14 @@ const getDownPaymentOptions = (): number[] => {
     downPayment += 500;
   }
   return downPaymentOptions;
+};
+
+const getLeaseDealOptions = (): number[] => {
+  const leaseDealOptions = [40];
+  let leaseDeal = leaseDealOptions[0];
+  while (leaseDealOptions[leaseDealOptions.length - 1] < 1199) {
+    leaseDealOptions.push(leaseDeal);
+    leaseDeal += 40;
+  }
+  return leaseDealOptions;
 };

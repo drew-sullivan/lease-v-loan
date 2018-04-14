@@ -4,6 +4,7 @@ import { Car } from '../car';
 import { CARS } from '../mock-cars';
 
 import { Year } from '../year';
+import { getOrCreateContainerRef } from '@angular/core/src/render3/di';
 
 const TIME_PERIOD = 20;
 
@@ -14,7 +15,7 @@ const TIME_PERIOD = 20;
 })
 export class ResultsComponent implements OnInit {
 
-  private car = CARS[0];
+  private car: Car;
   private loansUndertaken: number;
   private displayedColumns = [
     'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',
@@ -38,9 +39,7 @@ export class ResultsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.loadData();
-  }
+  ngOnInit() { }
 
   loadData(): void {
     this.loansUndertaken = TIME_PERIOD / 10;
@@ -51,7 +50,7 @@ export class ResultsComponent implements OnInit {
     this.lifestyleTotalCostForLoan = Math.round(this.loanTotalCost * this.loansUndertaken);
     this.loanNewCars = Math.round((TIME_PERIOD / this.car.leaseTermLength * 10)) / 10;
 
-    this.leaseMonthlyPrice = 220;
+    this.leaseMonthlyPrice = this.car.leaseDeal;
     this.savingForNextLease = Math.round(this.car.downPayment / (this.car.leaseTermLength * 12));
     this.leaseYearlyPrice = Math.round((this.leaseMonthlyPrice + this.savingForNextLease) * 12);
     this.leaseTotalCost = Math.round(this.leaseYearlyPrice * this.car.leaseTermLength);
@@ -106,8 +105,9 @@ export class ResultsComponent implements OnInit {
     return loanChartData.concat(loanChartData);
   }
 
-  printCar(event: any) {
-    console.log(event);
+  setCar(submittedCar: any) {
+    this.car = submittedCar;
+    this.loadData();
   }
 
 }
