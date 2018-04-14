@@ -6,7 +6,6 @@ import { CARS } from '../mock-cars';
 import { Year } from '../year';
 
 const TIME_PERIOD = 20;
-const LOANS_UNDERTAKEN = 2;
 
 @Component({
   selector: 'app-results',
@@ -15,7 +14,13 @@ const LOANS_UNDERTAKEN = 2;
 })
 export class ResultsComponent implements OnInit {
 
+  private priceOptions: number[];
+  private downPaymentOptions: number[];
+  private loanTermOptions: number[];
+  private leaseTermOptions: number[];
+
   private car = CARS[0];
+  private loansUndertaken: number;
   private displayedColumns = [
     'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',
     'july', 'aug', 'sep', 'oct', 'nov', 'dec', 'yearly total', 'grand total'];
@@ -43,10 +48,18 @@ export class ResultsComponent implements OnInit {
   }
 
   loadData(): void {
-    this.loanMonthlyPrice = Math.round(this.car.totalPrice / (this.car.loanTermLength * 12));
+    this.priceOptions = getPriceOptions();
+    this.downPaymentOptions = getDownPaymentOptions();
+    this.loanTermOptions = Array.from({length: 11}, (x, i) => i);
+    this.leaseTermOptions = Array.from({length: 11}, (x, i) => i);
+    console.log(this.downPaymentOptions);
+
+    this.loansUndertaken = TIME_PERIOD / 10;
+
+    this.loanMonthlyPrice = Math.round((this.car.totalPrice - this.car.downPayment) / (this.car.loanTermLength * 12));
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
     this.loanTotalCost = Math.round(this.loanYearlyPrice * this.car.loanTermLength);
-    this.lifestyleTotalCostForLoan = Math.round(this.loanTotalCost * LOANS_UNDERTAKEN);
+    this.lifestyleTotalCostForLoan = Math.round(this.loanTotalCost * this.loansUndertaken);
     this.loanNewCars = Math.round((TIME_PERIOD / this.car.leaseTermLength * 10)) / 10;
 
     this.leaseMonthlyPrice = 220;
@@ -91,7 +104,7 @@ export class ResultsComponent implements OnInit {
 
   getLoanChartData(): number[] {
     const loanChartData: number[] = [];
-    const tempNumMonths = (TIME_PERIOD * 12) / LOANS_UNDERTAKEN;
+    const tempNumMonths = (TIME_PERIOD * 12) / this.loansUndertaken;
     let tempLoanTotalAmount = this.loanTotalCost;
     while (loanChartData.length < tempNumMonths) {
       if (tempLoanTotalAmount < 1) {
@@ -105,3 +118,23 @@ export class ResultsComponent implements OnInit {
   }
 
 }
+
+const getPriceOptions = (): number[] => {
+  const priceOptions = [0];
+  let price = 5000;
+  while (priceOptions[priceOptions.length - 1] < 99999) {
+    priceOptions.push(price);
+    price += 5000;
+  }
+  return priceOptions;
+};
+
+const getDownPaymentOptions = (): number[] => {
+  const downPaymentOptions = [0];
+  let downPayment = 500;
+  while (downPaymentOptions[downPaymentOptions.length - 1] < 19999) {
+    downPaymentOptions.push(downPayment);
+    downPayment += 500;
+  }
+  return downPaymentOptions;
+};
