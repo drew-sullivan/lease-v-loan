@@ -16,7 +16,7 @@
               <mat-divider></mat-divider>
               <mat-list-item role="listitem">LEASE TOTAL COST: {{ leaseTotalCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item role="listitem">LIFESTYLE TOTAL COST FOR LEASEING: {{ lifestyleTotalCostForLeasing | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-list-item role="listitem">LIFETIME LEASE COST: {{ lifetimeLeaseCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
               <mat-divider></mat-divider>
               <mat-list-item role="listitem">NEW CARS OVER NEXT {{ timePeriod }} YEARS: {{ numNewCarLeases }}</mat-list-item>
             </mat-list>
@@ -31,7 +31,7 @@
               <mat-divider></mat-divider>
               <mat-list-item role="listitem">LOAN TOTAL COST: {{ loanTotalCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
               <mat-divider></mat-divider>
-              <mat-list-item role="listitem">LIFESTYLE TOTAL COST FOR LOAN: {{ lifestyleTotalCostForLoan | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
+              <mat-list-item role="listitem">LIFETIME LOAN COST: {{ lifetimeLoanCost | currency:'USD':'symbol-narrow':'.0' }}</mat-list-item>
               <mat-divider></mat-divider>
               <mat-list-item role="listitem">NEW CARS OVER NEXT {{ timePeriod }} YEARS: {{ numNewCarLoans }}</mat-list-item>
             </mat-list>
