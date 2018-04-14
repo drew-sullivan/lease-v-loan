@@ -21,15 +21,15 @@ export class CarFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.load();
+    this.loadFormOptions();
   }
 
-  load(): void {
-    this.priceOptions = getPriceOptions();
-    this.downPaymentOptions = getDownPaymentOptions();
-    this.loanTermOptions = Array.from({length: 11}, (x, i) => i);
-    this.leaseTermOptions = Array.from({length: 11}, (x, i) => i);
-    this.leaseDealOptions = getLeaseDealOptions();
+  loadFormOptions(): void {
+    this.priceOptions = generateRangeArray(2500, 100000, 2500);
+    this.downPaymentOptions = generateRangeArray(250, 20000, 250);
+    this.loanTermOptions = generateRangeArray(1, 10, 1);
+    this.leaseTermOptions = generateRangeArray(1, 10, 1);
+    this.leaseDealOptions = generateRangeArray(40, 1200, 20);
   }
 
   onSubmit(carForm: any) {
@@ -46,32 +46,13 @@ export class CarFormComponent implements OnInit {
 
 }
 
-const getPriceOptions = (): number[] => {
-  const priceOptions = [0];
-  let price = 5000;
-  while (priceOptions[priceOptions.length - 1] < 99999) {
-    priceOptions.push(price);
-    price += 5000;
+const generateRangeArray = (start, stop, step) => {
+  const rangeArray = [];
+  let arrayItem = start;
+  do {
+    rangeArray.push(arrayItem);
+    arrayItem += step;
   }
-  return priceOptions;
-};
-
-const getDownPaymentOptions = (): number[] => {
-  const downPaymentOptions = [0];
-  let downPayment = 500;
-  while (downPaymentOptions[downPaymentOptions.length - 1] < 19999) {
-    downPaymentOptions.push(downPayment);
-    downPayment += 500;
-  }
-  return downPaymentOptions;
-};
-
-const getLeaseDealOptions = (): number[] => {
-  const leaseDealOptions = [40];
-  let leaseDeal = leaseDealOptions[0];
-  while (leaseDealOptions[leaseDealOptions.length - 1] < 1199) {
-    leaseDealOptions.push(leaseDeal);
-    leaseDeal += 40;
-  }
-  return leaseDealOptions;
+  while (rangeArray[rangeArray.length - 1] <= stop - 1);
+  return rangeArray;
 };
