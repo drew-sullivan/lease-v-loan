@@ -106,4 +106,8 @@ export class ResultsComponent implements OnInit {
     return loanChartData.concat(loanChartData);
   }
 
+  printCar(event: any) {
+    console.log(event);
+  }
+
 }

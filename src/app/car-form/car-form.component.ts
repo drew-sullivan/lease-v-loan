@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { Car } from '../car';
 
@@ -9,14 +9,14 @@ import { Car } from '../car';
 })
 export class CarFormComponent implements OnInit {
 
+  @Output() car = new EventEmitter<Car>();
   private priceOptions: number[];
   private downPaymentOptions: number[];
   private loanTermOptions: number[];
   private leaseTermOptions: number[];
+  private leaseDealOptions: number[];
 
   private submitted: boolean;
-
-  model = new Car(30000, 2500, 6, 3);
 
   constructor() { }
 
@@ -29,15 +29,19 @@ export class CarFormComponent implements OnInit {
     this.downPaymentOptions = getDownPaymentOptions();
     this.loanTermOptions = Array.from({length: 11}, (x, i) => i);
     this.leaseTermOptions = Array.from({length: 11}, (x, i) => i);
+    this.leaseDealOptions = Array.from ({length: 21}, (x, i) => i);
   }
 
   onSubmit(carForm: any) {
     this.submitted = true;
-    console.log(carForm.controls['totalPrice'].value);
-  }
-
-  submit(form: any): void {
-    console.log(form);
+    const userCar = new Car(
+      carForm.controls['totalPrice'].value,
+      carForm.controls['downPayment'].value,
+      carForm.controls['loanTermLength'].value,
+      carForm.controls['leaseTermLength'].value,
+      carForm.controls['leaseDeal'].value,
+    );
+    this.car.emit(userCar);
   }
 
 }

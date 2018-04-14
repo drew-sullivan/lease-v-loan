@@ -4,6 +4,7 @@ export class Car {
         public totalPrice: number,
         public downPayment: number,
         public loanTermLength: number,
-        public leaseTermLength: number
+        public leaseTermLength: number,
+        public leaseDeal: number
     ) { }
 }
