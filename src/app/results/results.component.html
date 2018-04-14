@@ -1,34 +1,4 @@
-
-<mat-card>
-  <mat-form-field>
-    <mat-select placeholder="Vehicle Price">
-      <mat-option *ngFor="let p of priceOptions" [value]="p">
-        {{ p | currency:'USD':'symbol-narrow':'.0' }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Down Payment">
-      <mat-option *ngFor="let d of downPaymentOptions" [value]="d">
-        {{ d | currency:'USD':'symbol-narrow':'.0' }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Loan Duration">
-      <mat-option *ngFor="let num of loanTermOptions" [value]="num">
-        {{ num }} years
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Lease Duration">
-      <mat-option *ngFor="let num of leaseTermOptions" [value]="num">
-        {{ num }} years
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</mat-card>
+<app-car-form></app-car-form>
 
 <mat-card>
   <mat-card-content>

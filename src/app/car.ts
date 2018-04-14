@@ -1,8 +1,9 @@
 export class Car {
-    id: number;
-    totalPrice: number;
-    downPayment: number;
-    loanTermLength: number;
-    leaseTermLength: number;
-    milesPerYear: number;
+
+    constructor(
+        public totalPrice: number,
+        public downPayment: number,
+        public loanTermLength: number,
+        public leaseTermLength: number
+    ) { }
 }

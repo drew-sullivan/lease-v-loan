@@ -1,0 +1,33 @@
+<mat-card>
+  <form (ngSubmit)="onSubmit(carForm)" #carForm="ngForm">
+    <mat-form-field>
+      <mat-select placeholder="Vehicle Price" ngModel name="totalPrice" required>
+        <mat-option *ngFor="let p of priceOptions" [value]="p">
+          {{ p | currency:'USD':'symbol-narrow':'.0' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Down Payment" ngModel name="downPayment" required>
+        <mat-option *ngFor="let d of downPaymentOptions" [value]="d">
+          {{ d | currency:'USD':'symbol-narrow':'.0' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Loan Duration" ngModel name="loanTermLength" required>
+        <mat-option *ngFor="let num of loanTermOptions" [value]="num">
+          {{ num }} years
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Lease Duration" ngModel name="leaseTermLength" required>
+        <mat-option *ngFor="let num of leaseTermOptions" [value]="num">
+          {{ num }} years
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">Submit</button>
+  </form>
+</mat-card>
