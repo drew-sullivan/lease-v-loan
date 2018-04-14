@@ -6,7 +6,7 @@ import { CARS } from '../mock-cars';
 import { Year } from '../year';
 import { getOrCreateContainerRef } from '@angular/core/src/render3/di';
 
-const TIME_PERIOD = 50;
+const TIME_PERIOD = 10;
 
 @Component({
   selector: 'app-results',
@@ -17,10 +17,12 @@ export class ResultsComponent implements OnInit {
 
   private car: Car;
   private loansUndertaken: number;
-  private displayedColumns = [
+  private calTableCols = [
     'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',
     'july', 'aug', 'sep', 'oct', 'nov', 'dec', 'yearly total', 'grand total'];
-
+  private resultsTableCols = [
+    '', 'loan', 'lease'
+  ];
   private loanMonthlyPrice: number;
   private loanYearlyPrice: number;
   private loanTotalCost: number;
@@ -35,7 +37,7 @@ export class ResultsComponent implements OnInit {
   private numNewCarLeases: number;
 
   private timePeriod = TIME_PERIOD;
-  private dataSource = [];
+  private calendarTableDataSource = [];
 
   constructor() { }
 
@@ -43,6 +45,8 @@ export class ResultsComponent implements OnInit {
 
   loadData(): void {
     this.loansUndertaken = TIME_PERIOD / 10;
+
+
 
     this.loanMonthlyPrice = Math.round((this.car.totalPrice - this.car.downPayment) / (this.car.loanTermLength * 12));
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
@@ -57,12 +61,12 @@ export class ResultsComponent implements OnInit {
     this.lifetimeLeaseCost = Math.round(TIME_PERIOD * this.leaseYearlyPrice);
     this.numNewCarLeases = Math.round((TIME_PERIOD / this.car.leaseTermLength * 10 )) / 10;
 
-    this.dataSource = this.getTableData();
+    this.calendarTableDataSource = this.getCalendarTableData();
   }
 
-  getTableData(): any[] {
-    const tableData = [];
-    const months = this.displayedColumns.slice(1);
+  getCalendarTableData(): any[] {
+    const calendarTableData = [];
+    const months = this.calTableCols.slice(1);
     const leaseChartData = new Array(TIME_PERIOD * 12).fill(Math.round(this.leaseMonthlyPrice + this.savingForNextLease));
     const loanChartData = this.getLoanChartData();
     let i = 0;
@@ -77,17 +81,17 @@ export class ResultsComponent implements OnInit {
       const leaseYearlyTotal = leaseData.reduce((total, currentValue) => total += currentValue);
       loanGrandTotal += loanYearlyTotal;
       leaseGrandTotal += leaseYearlyTotal;
-      tableData.push(Object.assign({}, ...months.map((m, index) => (
+      calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
         {year: k, [m]: loanData[index], 'yearly total': loanYearlyTotal, 'grand total': loanGrandTotal}
       ))));
-      tableData.push(Object.assign({}, ...months.map((m, index) => (
+      calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
         {year: '', [m]: leaseData[index], 'yearly total': leaseYearlyTotal, 'grand total': leaseGrandTotal}
       ))));
       i += 12;
       j += 12;
       k += 1;
     }
-    return tableData;
+    return calendarTableData;
   }
 
   getLoanChartData(): number[] {
@@ -105,7 +109,6 @@ export class ResultsComponent implements OnInit {
     }
     for (let i = 0; i < this.loansUndertaken; i++) {
       finalData = finalData.concat(loanChartData);
-      console.log(finalData.length);
     }
     return finalData;
   }
