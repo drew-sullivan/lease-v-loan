@@ -6,7 +6,7 @@ import { CARS } from '../mock-cars';
 import { Year } from '../year';
 import { getOrCreateContainerRef } from '@angular/core/src/render3/di';
 
-const TIME_PERIOD = 20;
+const TIME_PERIOD = 50;
 
 @Component({
   selector: 'app-results',
@@ -91,6 +91,7 @@ export class ResultsComponent implements OnInit {
   }
 
   getLoanChartData(): number[] {
+    let finalData: number[] = [];
     const loanChartData: number[] = [];
     const tempNumMonths = (TIME_PERIOD * 12) / this.loansUndertaken;
     let tempLoanTotalAmount = this.loanTotalCost;
@@ -102,7 +103,11 @@ export class ResultsComponent implements OnInit {
       }
       tempLoanTotalAmount -= this.loanMonthlyPrice;
     }
-    return loanChartData.concat(loanChartData);
+    for (let i = 0; i < this.loansUndertaken; i++) {
+      finalData = finalData.concat(loanChartData);
+      console.log(finalData.length);
+    }
+    return finalData;
   }
 
   setCar(submittedCar: any) {
