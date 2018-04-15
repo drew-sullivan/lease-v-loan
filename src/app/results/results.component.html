@@ -13,7 +13,7 @@
 
       <ng-container *ngFor="let sumCol of summaryTableCols; let i = index; let last = last" matColumnDef={{sumCol}}>
         <mat-header-cell *matHeaderCellDef>{{ sumCol | uppercase }}</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ i === 0 ? row[sumCol] : row[sumCol] | currency:'USD':'symbol-narrow':'.0' }}</mat-cell>
+        <mat-cell *matCellDef="let row">{{ i === 0 || row['title'] === 'New Cars'  ? row[sumCol] : row[sumCol] | currency:'USD':'symbol-narrow':'.0' }}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="summaryTableCols"></mat-header-row>

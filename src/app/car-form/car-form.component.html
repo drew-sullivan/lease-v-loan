@@ -31,7 +31,7 @@
     <mat-form-field>
       <mat-select placeholder="Lease Deal" ngModel name="leaseDeal" required>
         <mat-option *ngFor="let num of leaseDealOptions" [value]="num">
-          {{ num | currency:'USD':'symbol-narrow':'.0' }}
+          {{ num | currency:'USD':'symbol-narrow':'.0' }} / month
         </mat-option>
       </mat-select>
     </mat-form-field>
