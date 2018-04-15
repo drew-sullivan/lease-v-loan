@@ -1,8 +1,8 @@
-.mat-row:nth-child(even) {
+.calendar-table-cols:nth-child(even) {
     background-color: #FF85AE;
 }
 
-.mat-row:nth-child(odd) {
+.calendar-table-cols:nth-child(odd) {
     background-color: #8C97D2;
 }
 
@@ -17,4 +17,22 @@
 
 mat-toolbar p {
     font-size: 12px;
+}
+
+.loan-summary-col {
+    background-color: #FF85AE;
+    padding: 16px;
+}
+
+.lease-summary-col {
+    background-color: #8C97D2;
+    padding: 16px;
+}
+
+.example-icon {
+    padding: 0 14px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
 }

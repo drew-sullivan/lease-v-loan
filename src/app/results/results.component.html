@@ -3,12 +3,32 @@
 <div *ngIf="car">
 
   <div class="example-container mat-elevation-z8">
-    <mat-toolbar>Summary</mat-toolbar>
+    <mat-toolbar>Summary
+
+      <mat-form-field>
+        <mat-select (change)="onChange($event)" placeholder="Time Frame">
+          <mat-option [value]="1">
+            1
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <span class="example-spacer"></span>
+      <button mat-raised-button disabled class="example-icon key-1">&nbsp;</button>
+      <p>&nbsp;= Loan</p>
+      <button mat-raised-button disabled class="example-icon key-2">&nbsp;</button>
+      <p>&nbsp;= Lease</p>
+    </mat-toolbar>
     <mat-table #table [dataSource]="summaryTableDataSource">
 
       <ng-container *ngFor="let sumCol of summaryTableCols; let i = index; let last = last" matColumnDef={{sumCol}}>
         <mat-header-cell *matHeaderCellDef>{{ sumCol | uppercase }}</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ i === 0 || row['title'] === 'New Cars'  ? row[sumCol] : row[sumCol] | currency:'USD':'symbol-narrow':'.0' }}</mat-cell>
+        <mat-cell *matCellDef="let row"
+                  [class.loan-summary-col]="sumCol === 'loan'"
+                  [class.lease-summary-col]="sumCol === 'lease'">
+                  {{ i === 0 || row['title'] === 'New Cars' ?
+                     row[sumCol] : row[sumCol] | currency:'USD':'symbol-narrow':'.0' }}
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="summaryTableCols"></mat-header-row>
@@ -17,12 +37,6 @@
     </mat-table>
 
     <mat-toolbar>Payment Information</mat-toolbar>
-    <mat-toolbar>
-      <button mat-raised-button disabled class="key-1">&nbsp;</button>
-      <p>&nbsp;= Loan</p>
-      <button mat-raised-button disabled class="key-2">&nbsp;</button>
-      <p>&nbsp;= Lease</p>
-    </mat-toolbar>
     <mat-table #table [dataSource]="calendarTableDataSource">
 
       <ng-container *ngFor="let col of calTableCols" matColumnDef={{col}}>
@@ -31,7 +45,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="calTableCols"></mat-header-row>
-      <mat-row *matRowDef="let myRowData; columns: calTableCols"></mat-row>
+      <mat-row *matRowDef="let myRowData; columns: calTableCols" class="calendar-table-cols"></mat-row>
 
     </mat-table>
   </div>

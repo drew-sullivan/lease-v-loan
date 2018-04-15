@@ -126,4 +126,8 @@ export class ResultsComponent implements OnInit {
     this.loadData();
   }
 
+  onChange(): void {
+    console.log('It worked');
+  }
+
 }

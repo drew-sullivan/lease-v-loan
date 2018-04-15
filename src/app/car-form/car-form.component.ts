@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { Car } from '../car';
+import { HelpersService } from '../services/helpers.service';
 
 @Component({
   selector: 'app-car-form',
@@ -18,7 +19,7 @@ export class CarFormComponent implements OnInit {
 
   private submitted: boolean;
 
-  constructor() { }
+  constructor(private helperService: HelpersService) { }
 
   ngOnInit() {
     this.loadFormOptions();
@@ -26,11 +27,11 @@ export class CarFormComponent implements OnInit {
   }
 
   loadFormOptions(): void {
-    this.priceOptions = generateRangeArray(2500, 100000, 2500);
-    this.downPaymentOptions = generateRangeArray(250, 20000, 250);
-    this.loanTermOptions = generateRangeArray(1, 10, 1);
-    this.leaseTermOptions = generateRangeArray(1, 10, 1);
-    this.leaseDealOptions = generateRangeArray(40, 1200, 20);
+    this.priceOptions = this.helperService.generateRangeArray(2500, 100000, 2500);
+    this.downPaymentOptions = this.helperService.generateRangeArray(250, 20000, 250);
+    this.loanTermOptions = this.helperService.generateRangeArray(1, 10, 1);
+    this.leaseTermOptions = this.helperService.generateRangeArray(1, 10, 1);
+    this.leaseDealOptions = this.helperService.generateRangeArray(40, 1200, 20);
   }
 
   onSubmit(carForm: any) {
@@ -46,14 +47,3 @@ export class CarFormComponent implements OnInit {
   }
 
 }
-
-const generateRangeArray = (start, stop, step) => {
-  const rangeArray = [];
-  let arrayItem = start;
-  do {
-    rangeArray.push(arrayItem);
-    arrayItem += step;
-  }
-  while (rangeArray[rangeArray.length - 1] <= stop - 1);
-  return rangeArray;
-};

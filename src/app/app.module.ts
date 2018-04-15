@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { ResultsComponent } from './results/results.component';
 import { CarFormComponent } from './car-form/car-form.component';
 
+import { HelpersService } from './services/helpers.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,7 @@ import { CarFormComponent } from './car-form/car-form.component';
     MaterialModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [HelpersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
