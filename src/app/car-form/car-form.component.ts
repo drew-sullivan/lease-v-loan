@@ -28,8 +28,8 @@ export class CarFormComponent implements OnInit {
 
   loadFormOptions(): void {
     this.priceOptions = this.helperService.generateRangeArray(2500, 100000, 2500);
-    this.downPaymentOptions = this.helperService.generateRangeArray(250, 20000, 250);
-    this.loanTermOptions = this.helperService.generateRangeArray(1, 10, 1);
+    this.downPaymentOptions = this.helperService.generateRangeArray(0, 20000, 250);
+    this.loanTermOptions = this.helperService.generateRangeArray(0, 10, 1);
     this.leaseTermOptions = this.helperService.generateRangeArray(1, 10, 1);
     this.leaseDealOptions = this.helperService.generateRangeArray(40, 1200, 20);
   }
