@@ -3,12 +3,7 @@
 <div *ngIf="car">
 
   <div class="example-container mat-elevation-z8">
-    <mat-toolbar>
-      <button mat-raised-button disabled class="key-1">&nbsp;</button>
-      <p>&nbsp;= Loan</p>
-      <button mat-raised-button disabled class="key-2">&nbsp;</button>
-      <p>&nbsp;= Lease</p>
-    </mat-toolbar>
+    <mat-toolbar>Summary</mat-toolbar>
     <mat-table #table [dataSource]="summaryTableDataSource">
 
       <ng-container *ngFor="let sumCol of summaryTableCols; let i = index; let last = last" matColumnDef={{sumCol}}>
@@ -21,6 +16,13 @@
 
     </mat-table>
 
+    <mat-toolbar>Payment Information</mat-toolbar>
+    <mat-toolbar>
+      <button mat-raised-button disabled class="key-1">&nbsp;</button>
+      <p>&nbsp;= Loan</p>
+      <button mat-raised-button disabled class="key-2">&nbsp;</button>
+      <p>&nbsp;= Lease</p>
+    </mat-toolbar>
     <mat-table #table [dataSource]="calendarTableDataSource">
 
       <ng-container *ngFor="let col of calTableCols" matColumnDef={{col}}>
