@@ -20,8 +20,8 @@ export class ResultsComponent implements OnInit {
   private calTableCols = [
     'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',
     'july', 'aug', 'sep', 'oct', 'nov', 'dec', 'yearly total', 'grand total'];
-  private resultsTableCols = [
-    '', 'loan', 'lease'
+  private summaryTableCols = [
+    'title', 'loan', 'lease'
   ];
   private loanMonthlyPrice: number;
   private loanYearlyPrice: number;
@@ -38,6 +38,7 @@ export class ResultsComponent implements OnInit {
 
   private timePeriod = TIME_PERIOD;
   private calendarTableDataSource = [];
+  private summaryTableDataSource = [];
 
   constructor() { }
 
@@ -45,8 +46,6 @@ export class ResultsComponent implements OnInit {
 
   loadData(): void {
     this.loansUndertaken = TIME_PERIOD / 10;
-
-
 
     this.loanMonthlyPrice = Math.round((this.car.totalPrice - this.car.downPayment) / (this.car.loanTermLength * 12));
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
@@ -60,6 +59,15 @@ export class ResultsComponent implements OnInit {
     this.leaseTotalCost = Math.round(this.leaseYearlyPrice * this.car.leaseTermLength);
     this.lifetimeLeaseCost = Math.round(TIME_PERIOD * this.leaseYearlyPrice);
     this.numNewCarLeases = Math.round((TIME_PERIOD / this.car.leaseTermLength * 10 )) / 10;
+
+    this.summaryTableDataSource.push(
+      { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
+      { 'title': 'Saving for Next Lease', 'loan': 0, 'lease': this.savingForNextLease},
+      { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice},
+      { 'title': 'Total Cost', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost},
+      { 'title': 'Lifetime Cost', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost},
+      { 'title': 'New Cars', 'loan': this.numNewCarLoans, 'lease': this.numNewCarLeases},
+    );
 
     this.calendarTableDataSource = this.getCalendarTableData();
   }
