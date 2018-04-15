@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class YoyLineChartComponent {
   // lineChart
   public lineChartData: Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Loan'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Lease'}
+    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Loan', lineTension: 0},
+    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Lease', lineTension: 0}
   ];
   public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   public lineChartOptions: any = {
