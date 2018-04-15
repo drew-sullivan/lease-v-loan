@@ -17,6 +17,7 @@
       <button mat-raised-button disabled class="example-icon key-2">&nbsp;</button>
       <p>&nbsp;= Lease</p>
     </mat-toolbar>
+
     <mat-table #table [dataSource]="summaryTableDataSource">
 
       <ng-container *ngFor="let sumCol of summaryTableCols; let i = index; let last = last" matColumnDef={{sumCol}}>
@@ -33,6 +34,8 @@
       <mat-row *matRowDef="let myRowData; columns: summaryTableCols"></mat-row>
 
     </mat-table>
+
+    <app-grand-total-line-chart></app-grand-total-line-chart>
 
     <mat-toolbar>Payment Information</mat-toolbar>
     <mat-table #table [dataSource]="calendarTableDataSource">

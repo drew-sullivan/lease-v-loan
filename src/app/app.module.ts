@@ -3,24 +3,28 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { ResultsComponent } from './results/results.component';
 import { CarFormComponent } from './car-form/car-form.component';
 
 import { HelpersService } from './services/helpers.service';
+import { GrandTotalLineChartComponent } from './grand-total-line-chart/grand-total-line-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ResultsComponent,
-    CarFormComponent
+    CarFormComponent,
+    GrandTotalLineChartComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ChartsModule
   ],
   providers: [HelpersService],
   bootstrap: [AppComponent]
