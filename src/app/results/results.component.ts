@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { Car } from '../car';
 import { CARS } from '../mock-cars';
-
 import { Year } from '../year';
-import { getOrCreateContainerRef } from '@angular/core/src/render3/di';
 
-const TIME_PERIOD = 10;
+import { HelpersService } from '../services/helpers.service';
+
+const TIME_PERIOD = 20;
 
 @Component({
   selector: 'app-results',
@@ -23,6 +23,7 @@ export class ResultsComponent implements OnInit {
   private summaryTableCols = [
     'title', 'loan', 'lease'
   ];
+  private timeFrameOptions: number[];
   private loanMonthlyPrice: number;
   private loanYearlyPrice: number;
   private loanTotalCost: number;
@@ -35,17 +36,20 @@ export class ResultsComponent implements OnInit {
   private leaseTotalCost: number;
   private lifetimeLeaseCost: number;
   private numNewCarLeases: number;
+  private timePeriod: number;
 
-  private timePeriod = TIME_PERIOD;
   private calendarTableDataSource = [];
   private summaryTableDataSource = [];
 
-  constructor() { }
+  constructor(private helpersService: HelpersService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.timePeriod = TIME_PERIOD;
+    this.timeFrameOptions = this.helpersService.generateRangeArray(10, 60, 10);
+  }
 
-  loadData(): void {
-    this.loansUndertaken = TIME_PERIOD / 10;
+  loadData() {
+    this.loansUndertaken = this.timePeriod / 10;
 
     this.loanMonthlyPrice = Math.round((this.car.totalPrice - this.car.downPayment) / (this.car.loanTermLength * 12));
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
@@ -57,12 +61,12 @@ export class ResultsComponent implements OnInit {
     this.savingForNextLease = Math.round(this.car.downPayment / (this.car.leaseTermLength * 12));
     this.leaseYearlyPrice = Math.round((this.leaseMonthlyPrice + this.savingForNextLease) * 12);
     this.leaseTotalCost = Math.round(this.leaseYearlyPrice * this.car.leaseTermLength);
-    this.lifetimeLeaseCost = Math.round(TIME_PERIOD * this.leaseYearlyPrice);
-    this.numNewCarLeases = Math.round((TIME_PERIOD / this.car.leaseTermLength * 10 )) / 10;
+    this.lifetimeLeaseCost = Math.round(this.timePeriod * this.leaseYearlyPrice);
+    this.numNewCarLeases = Math.round((this.timePeriod / this.car.leaseTermLength * 10 )) / 10;
 
     this.summaryTableDataSource.push(
       { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
-      { 'title': 'Saving for Next Lease', 'loan': 0, 'lease': this.savingForNextLease},
+      { 'title': 'Monthly Saving for Next Lease Down Payment', 'loan': 0, 'lease': this.savingForNextLease},
       { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice},
       { 'title': 'Total Cost', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost},
       { 'title': 'Lifetime Cost', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost},
@@ -75,14 +79,14 @@ export class ResultsComponent implements OnInit {
   getCalendarTableData(): any[] {
     const calendarTableData = [];
     const months = this.calTableCols.slice(1);
-    const leaseChartData = new Array(TIME_PERIOD * 12).fill(Math.round(this.leaseMonthlyPrice + this.savingForNextLease));
+    const leaseChartData = new Array(this.timePeriod * 12).fill(Math.round(this.leaseMonthlyPrice + this.savingForNextLease));
     const loanChartData = this.getLoanChartData();
     let i = 0;
     let j = 12;
     let k = 1;
     let loanGrandTotal = 0;
     let leaseGrandTotal = 0;
-    while (j <= TIME_PERIOD * 12) {
+    while (j <= this.timePeriod * 12) {
       const loanData = loanChartData.slice(i, j);
       const leaseData = leaseChartData.slice(i, j);
       const loanYearlyTotal = loanData.reduce((total, currentValue) => total += currentValue);
@@ -105,7 +109,7 @@ export class ResultsComponent implements OnInit {
   getLoanChartData(): number[] {
     let finalData: number[] = [];
     const loanChartData: number[] = [];
-    const tempNumMonths = (TIME_PERIOD * 12) / this.loansUndertaken;
+    const tempNumMonths = (this.timePeriod * 12) / this.loansUndertaken;
     let tempLoanTotalAmount = this.loanTotalCost;
     while (loanChartData.length < tempNumMonths) {
       if (tempLoanTotalAmount < 1) {
@@ -121,13 +125,14 @@ export class ResultsComponent implements OnInit {
     return finalData;
   }
 
-  setCar(submittedCar: any) {
+  setCar(submittedCar: Car) {
     this.car = submittedCar;
     this.loadData();
   }
 
-  onChange(): void {
-    console.log('It worked');
+  onTimeFrameChange(event: any) {
+    this.timePeriod = event.value;
+    this.loadData();
   }
 
 }

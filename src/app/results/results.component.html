@@ -6,10 +6,8 @@
     <mat-toolbar>Summary
 
       <mat-form-field>
-        <mat-select (change)="onChange($event)" placeholder="Time Frame">
-          <mat-option [value]="1">
-            1
-          </mat-option>
+        <mat-select (change)="onTimeFrameChange($event)" placeholder="Time Frame" required>
+          <mat-option [value]="num" *ngFor="let num of timeFrameOptions">{{ num }} years</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -41,7 +39,9 @@
 
       <ng-container *ngFor="let col of calTableCols" matColumnDef={{col}}>
         <mat-header-cell *matHeaderCellDef>{{ col | uppercase }}</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ col === 'year' ? row[col] : row[col] | currency:'USD':'symbol-narrow':'.0' }}</mat-cell>
+        <mat-cell *matCellDef="let row">
+          {{ col === 'year' ? row[col] : row[col] | currency:'USD':'symbol-narrow':'.0' }}
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="calTableCols"></mat-header-row>

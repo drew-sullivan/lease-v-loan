@@ -23,7 +23,7 @@ export class CarFormComponent implements OnInit {
 
   ngOnInit() {
     this.loadFormOptions();
-    this.car.emit(new Car(30000, 2000, 5, 3, 220));
+    // this.car.emit(new Car(30000, 2000, 5, 3, 220));
   }
 
   loadFormOptions(): void {
