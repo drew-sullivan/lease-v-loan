@@ -24,6 +24,30 @@ export class GrandTotalLineChartComponent implements OnInit {
             'en-US',
             { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(tooltipItem.yLabel)
       }
+    },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            callback: (label, index, labels) => `${new Intl.NumberFormat(
+              'en-US',
+              { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }
+            ).format(label / 1000)}k`
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'GRAND TOTAL'
+          }
+        }
+      ],
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'YEAR'
+          }
+        }
+      ]
     }
   };
   public lineChartColors: Array<any> = [
@@ -56,6 +80,6 @@ export class GrandTotalLineChartComponent implements OnInit {
   setLineChartData(): void {
     this.lineChartData.push({data: this.loanData, label: 'Loan', lineTension: 0});
     this.lineChartData.push({data: this.leaseData, label: 'Lease', lineTension: 0});
-    this.lineChartLabels = this.helperService.generateRangeArray(1, this.loanData.length, 1).map((year) => `Year ${year}`);
+    this.lineChartLabels = this.helperService.generateRangeArray(1, this.loanData.length, 1);
   }
 }
