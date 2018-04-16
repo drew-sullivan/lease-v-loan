@@ -1,10 +1,10 @@
+<mat-toolbar>What are the loan and lease details?</mat-toolbar>
 <app-car-form (car)="setCar($event)"></app-car-form>
 
 <div *ngIf="car">
 
-  <div class="example-container mat-elevation-z8">
+  <div class="mat-elevation-z8">
     <mat-toolbar>Summary
-
       <mat-form-field>
         <mat-select (change)="onTimeFrameChange($event)" placeholder="Time Frame" required>
           <mat-option [value]="num" *ngFor="let num of timeFrameOptions">{{ num }} years</mat-option>
@@ -19,7 +19,6 @@
     </mat-toolbar>
 
     <mat-table #table [dataSource]="summaryTableDataSource">
-
       <ng-container *ngFor="let sumCol of summaryTableCols; let i = index; let last = last" matColumnDef={{sumCol}}>
         <mat-header-cell *matHeaderCellDef>{{ sumCol | uppercase }}</mat-header-cell>
         <mat-cell *matCellDef="let row"
@@ -29,30 +28,27 @@
                      row[sumCol] : row[sumCol] | currency:'USD':'symbol-narrow':'.0' }}
         </mat-cell>
       </ng-container>
-
       <mat-header-row *matHeaderRowDef="summaryTableCols"></mat-header-row>
       <mat-row *matRowDef="let myRowData; columns: summaryTableCols"></mat-row>
-
     </mat-table>
 
-    <app-grand-total-line-chart [loanData]="grandTotalChartLoanData"
-                                [leaseData]="grandTotalChartLeaseData">
+    <app-grand-total-line-chart
+      [loanData]="grandTotalChartLoanData"
+      [leaseData]="grandTotalChartLeaseData">
     </app-grand-total-line-chart>
 
     <mat-toolbar>Payment Information</mat-toolbar>
     <mat-table #table [dataSource]="calendarTableDataSource">
-
       <ng-container *ngFor="let col of calTableCols" matColumnDef={{col}}>
         <mat-header-cell *matHeaderCellDef>{{ col | uppercase }}</mat-header-cell>
         <mat-cell *matCellDef="let row">
           {{ col === 'year' ? row[col] : row[col] | currency:'USD':'symbol-narrow':'.0' }}
         </mat-cell>
       </ng-container>
-
       <mat-header-row *matHeaderRowDef="calTableCols"></mat-header-row>
       <mat-row *matRowDef="let myRowData; columns: calTableCols" class="calendar-table-cols"></mat-row>
-
     </mat-table>
+
   </div>
 
 </div>

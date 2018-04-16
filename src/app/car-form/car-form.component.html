@@ -1,8 +1,7 @@
 <mat-card>
   <form (ngSubmit)="onSubmit(carForm)" #carForm="ngForm">
-    
     <section>
-      <h2 class="section-title">Loan Information</h2>
+      <h2 class="section-title">Loan Details</h2>
       <mat-form-field>
         <mat-select placeholder="Vehicle Price" ngModel name="totalPrice" required>
           <mat-option *ngFor="let num of priceOptions" [value]="num">
@@ -27,7 +26,7 @@
     </section>
     
     <section>
-      <h2 class="section-title">Lease Information</h2>
+      <h2 class="section-title">Lease Details</h2>
       <mat-form-field>
         <mat-select placeholder="Lease Duration" ngModel name="leaseTermLength" required>
           <mat-option *ngFor="let num of leaseTermOptions" [value]="num">
@@ -47,6 +46,5 @@
     <section>
       <button type="submit" mat-raised-button color="primary">Submit</button>
     </section>
-
   </form>
 </mat-card>
