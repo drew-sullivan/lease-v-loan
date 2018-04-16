@@ -11,11 +11,11 @@ import { HelpersService } from '../services/helpers.service';
 export class CarFormComponent implements OnInit {
 
   @Output() car = new EventEmitter<Car>();
-  private priceOptions: number[];
-  private downPaymentOptions: number[];
-  private loanTermOptions: number[];
-  private leaseTermOptions: number[];
-  private leaseDealOptions: number[];
+  priceOptions: number[];
+  downPaymentOptions: number[];
+  loanTermOptions: number[];
+  leaseTermOptions: number[];
+  leaseDealOptions: number[];
 
   private submitted: boolean;
 

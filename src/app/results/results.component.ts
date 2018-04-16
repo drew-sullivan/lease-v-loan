@@ -15,7 +15,7 @@ const TIME_PERIOD = 50;
 })
 export class ResultsComponent implements OnInit {
 
-  private car: Car;
+  car: Car;
   private loansUndertaken: number;
   private calTableCols = [
     'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',
