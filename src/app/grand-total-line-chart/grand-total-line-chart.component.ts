@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { HelpersService } from '../services/helpers.service';
 
 @Component({
   selector: 'app-grand-total-line-chart',
   templateUrl: './grand-total-line-chart.component.html',
   styleUrls: ['./grand-total-line-chart.component.css']
 })
-export class GrandTotalLineChartComponent {
+export class GrandTotalLineChartComponent implements OnInit {
+
+  @Input() loanData: any[];
+  @Input() leaseData: any[];
+
   // lineChart
-  public lineChartData: Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Loan', lineTension: 0},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Lease', lineTension: 0},
-  ];
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartData: Array<any> = [];
+  public lineChartLabels: string[];
   public lineChartOptions: any = {
     responsive: true,
     maintainAspectRatio: false
@@ -37,12 +39,15 @@ export class GrandTotalLineChartComponent {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-  // events
-  public chartClicked(e: any): void {
-    console.log(e);
+  constructor(private helperService: HelpersService) { }
+
+  ngOnInit() {
+    this.setLineChartData();
   }
 
-  public chartHovered(e: any): void {
-    console.log(e);
+  setLineChartData(): void {
+    this.lineChartData.push({data: this.loanData, label: 'Loan', lineTension: 0});
+    this.lineChartData.push({data: this.leaseData, label: 'Lease', lineTension: 0});
+    this.lineChartLabels = this.helperService.generateRangeArray(1, this.loanData.length, 1).map((year) => `Year ${year}`);
   }
 }

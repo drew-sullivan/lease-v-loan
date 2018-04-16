@@ -6,7 +6,7 @@ import { Year } from '../year';
 
 import { HelpersService } from '../services/helpers.service';
 
-const TIME_PERIOD = 20;
+const TIME_PERIOD = 50;
 
 @Component({
   selector: 'app-results',
@@ -40,6 +40,9 @@ export class ResultsComponent implements OnInit {
 
   private calendarTableDataSource = [];
   private summaryTableDataSource = [];
+
+  private grandTotalChartLoanData = [];
+  private grandTotalChartLeaseData = [];
 
   constructor(private helpersService: HelpersService) { }
 
@@ -99,6 +102,8 @@ export class ResultsComponent implements OnInit {
       calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
         {year: '', [m]: leaseData[index], 'yearly total': leaseYearlyTotal, 'grand total': leaseGrandTotal}
       ))));
+      this.grandTotalChartLoanData.push(loanGrandTotal);
+      this.grandTotalChartLeaseData.push(leaseGrandTotal);
       i += 12;
       j += 12;
       k += 1;

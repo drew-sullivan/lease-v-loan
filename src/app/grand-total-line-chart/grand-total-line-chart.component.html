@@ -1,12 +1,10 @@
-<div style="display: inline-block;">
+<div style="display: block;">
   <canvas baseChart width="523" height="400"
           [datasets]="lineChartData"
           [labels]="lineChartLabels"
           [options]="lineChartOptions"
           [colors]="lineChartColors"
           [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)">
+          [chartType]="lineChartType">
   </canvas>
 </div>
