@@ -16,7 +16,15 @@ export class GrandTotalLineChartComponent implements OnInit {
   public lineChartLabels: string[];
   public lineChartOptions: any = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    tooltips: {
+      callbacks: {
+        label: (tooltipItem, data) =>
+          new Intl.NumberFormat(
+            'en-US',
+            { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(tooltipItem.yLabel)
+      }
+    }
   };
   public lineChartColors: Array<any> = [
     { // loan

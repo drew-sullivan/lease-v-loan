@@ -11,15 +11,13 @@ import { CarFormComponent } from './car-form/car-form.component';
 
 import { HelpersService } from './services/helpers.service';
 import { GrandTotalLineChartComponent } from './grand-total-line-chart/grand-total-line-chart.component';
-import { YoyLineChartComponent } from './yoy-line-chart/yoy-line-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ResultsComponent,
     CarFormComponent,
-    GrandTotalLineChartComponent,
-    YoyLineChartComponent
+    GrandTotalLineChartComponent
   ],
   imports: [
     BrowserModule,
