@@ -1,16 +1,9 @@
-<mat-toolbar>What are the loan and lease details?</mat-toolbar>
 <app-car-form (car)="setCar($event)"></app-car-form>
 
 <div *ngIf="car">
 
   <div class="mat-elevation-z8">
     <mat-toolbar>Summary
-      <mat-form-field>
-        <mat-select (change)="onTimeFrameChange($event)" placeholder="Time Frame" required>
-          <mat-option [value]="num" *ngFor="let num of timeFrameOptions">{{ num }} years</mat-option>
-        </mat-select>
-      </mat-form-field>
-
       <span class="example-spacer"></span>
       <button mat-raised-button disabled class="example-icon key-1">&nbsp;</button>
       <p>&nbsp;= Loan</p>

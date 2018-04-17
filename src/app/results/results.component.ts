@@ -6,7 +6,7 @@ import { Year } from '../year';
 
 import { HelpersService } from '../services/helpers.service';
 
-const TIME_PERIOD = 50;
+const TIME_PERIOD = 20;
 
 @Component({
   selector: 'app-results',
@@ -46,10 +46,7 @@ export class ResultsComponent implements OnInit {
 
   constructor(private helpersService: HelpersService) { }
 
-  ngOnInit() {
-    this.timePeriod = TIME_PERIOD;
-    this.timeFrameOptions = this.helpersService.generateRangeArray(10, 60, 10);
-  }
+  ngOnInit() { }
 
   loadData() {
     this.loansUndertaken = this.timePeriod / 10;
@@ -132,6 +129,7 @@ export class ResultsComponent implements OnInit {
 
   setCar(submittedCar: Car) {
     this.car = submittedCar;
+    this.timePeriod = this.car.timeFrame;
     this.loadData();
   }
 

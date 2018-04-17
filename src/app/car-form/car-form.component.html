@@ -1,6 +1,6 @@
 <mat-card>
   <form (ngSubmit)="onSubmit(carForm)" #carForm="ngForm">
-    
+
     <section>
       <h2 class="section-title">Loan Details</h2>
       <mat-form-field>
@@ -25,7 +25,7 @@
         </mat-select>
       </mat-form-field>
     </section>
-    
+
     <section>
       <h2 class="section-title">Lease Details</h2>
       <mat-form-field>
@@ -40,6 +40,15 @@
           <mat-option *ngFor="let num of leaseDealOptions" [value]="num">
             {{ num | currency:'USD':'symbol-narrow':'.0' }} / month
           </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
+
+    <section>
+      <h2 class="section-title"></h2>
+      <mat-form-field>
+        <mat-select placeholder="Time Frame" ngModel name="timeFrame" required>
+          <mat-option [value]="num" *ngFor="let num of timeFrameOptions">{{ num }} years</mat-option>
         </mat-select>
       </mat-form-field>
     </section>
