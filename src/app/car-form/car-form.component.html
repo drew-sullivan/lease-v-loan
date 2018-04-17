@@ -51,6 +51,16 @@
           <mat-option [value]="num" *ngFor="let num of timeFrameOptions">{{ num }} years</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Age" ngModel name="age" required>
+          <mat-option [value]="age" *ngFor="let age of ageOptions">{{ age }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Gender" ngModel name="gender" required>
+          <mat-option [value]="gender" *ngFor="let gender of genderOptions">{{ gender }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </section>
 
     <section>

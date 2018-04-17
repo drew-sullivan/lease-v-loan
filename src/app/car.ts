@@ -6,6 +6,8 @@ export class Car {
         public loanTermLength: number,
         public leaseTermLength: number,
         public leaseDeal: number,
-        public timeFrame: number
+        public timeFrame: number,
+        public age: string,
+        public gender: string
     ) { }
 }
