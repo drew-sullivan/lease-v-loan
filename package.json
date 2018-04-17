@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod && firebase deploy && open https://loan-v-lease.firebaseapp.com"
+    "deploy": "git add . && git commit -m 'Deploying' && git push origin head && ng build --prod && firebase deploy && open https://loan-v-lease.firebaseapp.com"
   },
   "private": true,
   "dependencies": {
