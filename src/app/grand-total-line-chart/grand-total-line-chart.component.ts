@@ -19,10 +19,10 @@ export class GrandTotalLineChartComponent implements OnInit {
     maintainAspectRatio: false,
     tooltips: {
       callbacks: {
-        label: (tooltipItem, data) =>
-          new Intl.NumberFormat(
-            'en-US',
-            { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(tooltipItem.yLabel)
+        label: (tooltipItem, data) => {
+          return new Intl.NumberFormat(
+            'en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(tooltipItem.yLabel);
+        }
       }
     },
     scales: {
@@ -80,6 +80,7 @@ export class GrandTotalLineChartComponent implements OnInit {
   setLineChartData(): void {
     this.lineChartData.push({data: this.loanData, label: 'Loan', lineTension: 0});
     this.lineChartData.push({data: this.leaseData, label: 'Lease', lineTension: 0});
-    this.lineChartLabels = this.helperService.generateRangeArray(1, this.loanData.length, 1);
+    this.lineChartLabels = this.helperService.generateRangeArray(1, this.loanData.length, 1)
+      .map(lineChartLabel => `Year ${lineChartLabel}`);
   }
 }
