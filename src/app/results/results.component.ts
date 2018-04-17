@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Car } from '../car';
-import { CARS } from '../mock-cars';
 import { Year } from '../year';
 
 import { HelpersService } from '../services/helpers.service';
@@ -46,12 +45,16 @@ export class ResultsComponent implements OnInit {
 
   constructor(private helpersService: HelpersService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   loadData() {
     this.loansUndertaken = this.timePeriod / 10;
 
-    this.loanMonthlyPrice = Math.round((this.car.totalPrice - this.car.downPayment) / (this.car.loanTermLength * 12));
+    this.loanMonthlyPrice = Math.round(
+      (this.car.totalPrice - this.car.downPayment - this.getTradeInValue()) / (this.car.loanTermLength * 12)
+    );
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
     this.loanTotalCost = Math.round(this.loanYearlyPrice * this.car.loanTermLength);
     this.lifetimeLoanCost = Math.round(this.loanTotalCost * this.loansUndertaken);
@@ -74,6 +77,7 @@ export class ResultsComponent implements OnInit {
     );
 
     this.calendarTableDataSource = this.getCalendarTableData();
+    console.log(this.getTradeInValue());
   }
 
   getCalendarTableData(): any[] {
@@ -136,6 +140,34 @@ export class ResultsComponent implements OnInit {
   onTimeFrameChange(event: any) {
     this.timePeriod = event.value;
     this.loadData();
+  }
+
+  getTradeInValue(): number {
+    const depreciationRate = this.getDepreciationRate();
+    const valueAfterOneYear = this.car.totalPrice * Math.pow((1 - 35 / 100), 1);
+    return Math.round((valueAfterOneYear * Math.pow(1 - depreciationRate / 100, 10 - 1)));
+  }
+
+  getDepreciationRate(): number {
+    let depreciationRate;
+    const gender = this.car.gender;
+    const age = this.car.age;
+    if (gender === 'male') {
+      if (age === '20-34' || age === '35-54' || age === '55-64') {
+        depreciationRate = 21.4;
+      } else if (age === '16-19') {
+        depreciationRate = 10.4;
+      } else {
+        depreciationRate = 15.6;
+      }
+    } else {
+      if (age === '16-19' || age === '55-64' || age === '65+') {
+        depreciationRate = 10.4;
+      } else {
+        depreciationRate = 15.6;
+      }
+    }
+    return depreciationRate;
   }
 
 }
