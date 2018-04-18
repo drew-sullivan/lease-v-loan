@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 import { Car } from '../car';
 import { HelpersService } from '../services/helpers.service';
@@ -10,7 +10,9 @@ import { HelpersService } from '../services/helpers.service';
 })
 export class CarFormComponent implements OnInit {
 
-  @Output() car = new EventEmitter<Car>();
+  @Input() car: Car;
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output() onSubmitted = new EventEmitter<Car>();
   priceOptions: number[];
   downPaymentOptions: number[];
   loanTermOptions: number[];
@@ -25,8 +27,9 @@ export class CarFormComponent implements OnInit {
   constructor(private helperService: HelpersService) { }
 
   ngOnInit() {
+    console.log(this.car);
     this.loadFormOptions();
-    this.car.emit(new Car(30000, 2000, 5, 3, 220, 50, '20-34', 'female'));
+    // this.car.emit(new Car(30000, 2000, 5, 3, 220, 50, '20-34', 'female'));
   }
 
   loadFormOptions(): void {
@@ -52,7 +55,7 @@ export class CarFormComponent implements OnInit {
       carForm.controls['age'].value,
       carForm.controls['gender'].value
     );
-    this.car.emit(userCar);
+    this.onSubmitted.emit(userCar);
   }
 
 }
