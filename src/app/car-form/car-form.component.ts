@@ -20,8 +20,6 @@ export class CarFormComponent implements OnInit {
   ageOptions: string[];
   genderOptions: string[];
 
-  private submitted: boolean;
-
   constructor(private helperService: HelpersService) { }
 
   ngOnInit() {
@@ -40,8 +38,7 @@ export class CarFormComponent implements OnInit {
     this.genderOptions = ['Male', 'Female'];
   }
 
-  onSubmit(carForm: any) {
-    this.submitted = true;
+  onSubmit(carForm: any): void {
     const userCar = new Car(
       carForm.controls['totalPrice'].value,
       carForm.controls['downPayment'].value,

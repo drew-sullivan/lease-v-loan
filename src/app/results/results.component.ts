@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Car } from '../car';
 import { Year } from '../year';
 
 import { HelpersService } from '../services/helpers.service';
-
-const TIME_PERIOD = 20;
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.css']
+  styleUrls: ['./results.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResultsComponent implements OnInit {
 
+  @Input() newFormSubmissionStream: Observable<any>;
   car: Car;
   private loansUndertaken: number;
   private calTableCols = [
@@ -43,14 +44,20 @@ export class ResultsComponent implements OnInit {
   private grandTotalChartLoanData = [];
   private grandTotalChartLeaseData = [];
 
-  constructor(private helpersService: HelpersService) { }
+  constructor(
+    private helpersService: HelpersService,
+    private ref: ChangeDetectorRef) {
+    }
 
   ngOnInit() {
-
+    this.newFormSubmissionStream.subscribe(() => {
+      this.car = null;
+      this.ref.markForCheck();
+    });
   }
 
   loadData() {
-    this.loansUndertaken = this.timePeriod / 10;
+    this.loansUndertaken = this.car.timeFrame / 10;
 
     this.loanMonthlyPrice = Math.round(
       (this.car.totalPrice - this.car.downPayment - this.getTradeInValue()) / (this.car.loanTermLength * 12)
@@ -64,8 +71,8 @@ export class ResultsComponent implements OnInit {
     this.savingForNextLease = Math.round(this.car.downPayment / (this.car.leaseTermLength * 12));
     this.leaseYearlyPrice = Math.round((this.leaseMonthlyPrice + this.savingForNextLease) * 12);
     this.leaseTotalCost = Math.round(this.leaseYearlyPrice * this.car.leaseTermLength);
-    this.lifetimeLeaseCost = Math.round(this.timePeriod * this.leaseYearlyPrice);
-    this.numNewCarLeases = Math.round((this.timePeriod / this.car.leaseTermLength * 10 )) / 10;
+    this.lifetimeLeaseCost = Math.round(this.car.timeFrame * this.leaseYearlyPrice);
+    this.numNewCarLeases = Math.round((this.car.timeFrame / this.car.leaseTermLength * 10 )) / 10;
 
     this.summaryTableDataSource.push(
       { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
@@ -77,20 +84,19 @@ export class ResultsComponent implements OnInit {
     );
 
     this.calendarTableDataSource = this.getCalendarTableData();
-    console.log(this.getTradeInValue());
   }
 
   getCalendarTableData(): any[] {
     const calendarTableData = [];
     const months = this.calTableCols.slice(1);
-    const leaseChartData = new Array(this.timePeriod * 12).fill(Math.round(this.leaseMonthlyPrice + this.savingForNextLease));
+    const leaseChartData = new Array(this.car.timeFrame * 12).fill(Math.round(this.leaseMonthlyPrice + this.savingForNextLease));
     const loanChartData = this.getLoanChartData();
     let i = 0;
     let j = 12;
     let k = 1;
     let loanGrandTotal = 0;
     let leaseGrandTotal = 0;
-    while (j <= this.timePeriod * 12) {
+    while (j <= this.car.timeFrame * 12) {
       const loanData = loanChartData.slice(i, j);
       const leaseData = leaseChartData.slice(i, j);
       const loanYearlyTotal = loanData.reduce((total, currentValue) => total += currentValue);
@@ -115,7 +121,7 @@ export class ResultsComponent implements OnInit {
   getLoanChartData(): number[] {
     let finalData: number[] = [];
     const loanChartData: number[] = [];
-    const tempNumMonths = (this.timePeriod * 12) / this.loansUndertaken;
+    const tempNumMonths = (this.car.timeFrame * 12) / this.loansUndertaken;
     let tempLoanTotalAmount = this.loanTotalCost;
     while (loanChartData.length < tempNumMonths) {
       if (tempLoanTotalAmount < 1) {
@@ -131,14 +137,10 @@ export class ResultsComponent implements OnInit {
     return finalData;
   }
 
-  setCar(submittedCar: Car) {
+  setCar(submittedCar: Car): void {
+    console.log(this.car);
     this.car = submittedCar;
-    this.timePeriod = this.car.timeFrame;
-    this.loadData();
-  }
-
-  onTimeFrameChange(event: any) {
-    this.timePeriod = event.value;
+    console.log(this.car);
     this.loadData();
   }
 
