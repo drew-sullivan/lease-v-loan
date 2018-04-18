@@ -14,7 +14,7 @@ const TIME_PERIOD = 20;
 })
 export class ResultsComponent implements OnInit {
 
-  car = new Car(30000, 2000, 5, 3, 220, 50, '20-34', 'female');
+  car: Car;
   private loansUndertaken: number;
   private calTableCols = [
     'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',
@@ -49,6 +49,7 @@ export class ResultsComponent implements OnInit {
   }
 
   loadData() {
+    this.car = new Car(30000, 2000, 5, 3, 220, 50, '20-34', 'female');
     this.loansUndertaken = this.car.timeFrame / 10;
 
     this.loanMonthlyPrice = Math.round(

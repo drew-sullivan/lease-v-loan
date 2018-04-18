@@ -27,7 +27,6 @@ export class CarFormComponent implements OnInit {
   constructor(private helperService: HelpersService) { }
 
   ngOnInit() {
-    console.log(this.car);
     this.loadFormOptions();
     // this.car.emit(new Car(30000, 2000, 5, 3, 220, 50, '20-34', 'female'));
   }
