@@ -8,8 +8,11 @@ import { HelpersService } from '../services/helpers.service';
 })
 export class GrandTotalLineChartComponent implements OnInit {
 
-  @Input() loanData: any[];
-  @Input() leaseData: any[];
+  @Input() set loanData(value: any[]) { this._loanData = value; }
+  @Input() set leaseData(value: any[]) { this._leaseData = value; }
+
+  private _loanData: any[];
+  private _leaseData: any[];
 
   // lineChart
   public lineChartData: Array<any> = [];
@@ -78,9 +81,9 @@ export class GrandTotalLineChartComponent implements OnInit {
   }
 
   setLineChartData(): void {
-    this.lineChartData.push({data: this.loanData, label: 'Loan', lineTension: 0});
-    this.lineChartData.push({data: this.leaseData, label: 'Lease', lineTension: 0});
-    this.lineChartLabels = this.helperService.generateRangeArray(1, this.loanData.length, 1)
+    this.lineChartData.push({data: this._loanData, label: 'Loan', lineTension: 0});
+    this.lineChartData.push({data: this._leaseData, label: 'Lease', lineTension: 0});
+    this.lineChartLabels = this.helperService.generateRangeArray(1, this._loanData.length, 1)
       .map(lineChartLabel => `Year ${lineChartLabel}`);
   }
 }
