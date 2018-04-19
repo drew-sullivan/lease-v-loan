@@ -5,8 +5,6 @@ import { Year } from '../year';
 
 import { HelpersService } from '../services/helpers.service';
 
-const TIME_PERIOD = 20;
-
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
@@ -36,20 +34,17 @@ export class ResultsComponent implements OnInit {
   private lifetimeLeaseCost: number;
   private numNewCarLeases: number;
 
-  private calendarTableDataSource = [];
   private summaryTableDataSource = [];
+  private calendarTableDataSource: number[];
 
-  private grandTotalChartLoanData = [];
-  private grandTotalChartLeaseData = [];
+  private grandTotalChartLoanData: number[];
+  private grandTotalChartLeaseData: number[];
 
   constructor(private helpersService: HelpersService) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   loadData() {
-    this.car = new Car(30000, 2000, 5, 3, 220, 50, '20-34', 'female');
     this.loansUndertaken = this.car.timeFrame / 10;
 
     this.loanMonthlyPrice = Math.round(
@@ -67,20 +62,30 @@ export class ResultsComponent implements OnInit {
     this.lifetimeLeaseCost = Math.round(this.car.timeFrame * this.leaseYearlyPrice);
     this.numNewCarLeases = Math.round((this.car.timeFrame / this.car.leaseTermLength * 10 )) / 10;
 
-    this.summaryTableDataSource.push(
-      { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
-      { 'title': 'Monthly Saving for Next Lease Down Payment', 'loan': 0, 'lease': this.savingForNextLease},
-      { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice},
-      { 'title': 'Total Cost', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost},
-      { 'title': 'Lifetime Cost', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost},
-      { 'title': 'New Cars', 'loan': this.numNewCarLoans, 'lease': this.numNewCarLeases},
-    );
+    this.summaryTableDataSource = this.getSummaryTableData();
 
-    this.calendarTableDataSource = this.getCalendarTableData();
+    const { calendarTableData, grandTotalChartLoanData, grandTotalChartLeaseData } = this.getYearlyData();
+    this.calendarTableDataSource = calendarTableData;
+    this.grandTotalChartLoanData = grandTotalChartLoanData;
+    this.grandTotalChartLeaseData = grandTotalChartLeaseData;
   }
 
-  getCalendarTableData(): any[] {
+  getSummaryTableData(): any[] {
+    const summaryTableData = [
+      { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
+      { 'title': 'Monthly Saving for Next Lease Down Payment', 'loan': 0, 'lease': this.savingForNextLease },
+      { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice },
+      { 'title': 'Total Cost', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost },
+      { 'title': 'Lifetime Cost', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost },
+      { 'title': 'New Cars', 'loan': this.numNewCarLoans, 'lease': this.numNewCarLeases },
+    ];
+    return summaryTableData;
+  }
+
+  getYearlyData() {
     const calendarTableData = [];
+    const grandTotalChartLoanData = [];
+    const grandTotalChartLeaseData = [];
     const months = this.calTableCols.slice(1);
     const leaseChartData = new Array(this.car.timeFrame * 12).fill(Math.round(this.leaseMonthlyPrice + this.savingForNextLease));
     const loanChartData = this.getLoanChartData();
@@ -97,18 +102,18 @@ export class ResultsComponent implements OnInit {
       loanGrandTotal += loanYearlyTotal;
       leaseGrandTotal += leaseYearlyTotal;
       calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
-        {year: k, [m]: loanData[index], 'yearly total': loanYearlyTotal, 'grand total': loanGrandTotal}
+        { year: k, [m]: loanData[index], 'yearly total': loanYearlyTotal, 'grand total': loanGrandTotal }
       ))));
       calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
-        {year: '', [m]: leaseData[index], 'yearly total': leaseYearlyTotal, 'grand total': leaseGrandTotal}
+        { year: '', [m]: leaseData[index], 'yearly total': leaseYearlyTotal, 'grand total': leaseGrandTotal }
       ))));
-      this.grandTotalChartLoanData.push(loanGrandTotal);
-      this.grandTotalChartLeaseData.push(leaseGrandTotal);
+      grandTotalChartLoanData.push(loanGrandTotal);
+      grandTotalChartLeaseData.push(leaseGrandTotal);
       i += 12;
       j += 12;
       k += 1;
     }
-    return calendarTableData;
+    return { calendarTableData, grandTotalChartLoanData, grandTotalChartLeaseData };
   }
 
   getLoanChartData(): number[] {
@@ -130,13 +135,7 @@ export class ResultsComponent implements OnInit {
     return finalData;
   }
 
-  setCar(submittedCar: Car) {
-    this.car = submittedCar;
-    this.loadData();
-  }
-
-  print(submittedForm: Car) {
-    console.log(submittedForm);
+  setCar(submittedForm: Car) {
     this.car = submittedForm;
     this.loadData();
   }
