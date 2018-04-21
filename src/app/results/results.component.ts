@@ -42,7 +42,9 @@ export class ResultsComponent implements OnInit {
 
   constructor(private helpersService: HelpersService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getMaxLoan();
+  }
 
   loadData() {
     this.loansUndertaken = this.car.timeFrame / 10;
@@ -166,6 +168,14 @@ export class ResultsComponent implements OnInit {
       }
     }
     return depreciationRate;
+  }
+
+  getMaxLoan(): void {
+    const numMonths = 60;
+    const interest = .05;
+    const monthly = 220;
+    const principal = monthly * (1 - Math.pow(1 + interest / 12, -numMonths)) * 12 / interest;
+    console.log(principal);
   }
 
 }
