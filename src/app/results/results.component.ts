@@ -43,6 +43,8 @@ export class ResultsComponent implements OnInit {
   constructor(private helpersService: HelpersService) { }
 
   ngOnInit() {
+    console.log(this.car);
+    this.car = null;
     this.getMaxLoan();
   }
 
@@ -176,6 +178,10 @@ export class ResultsComponent implements OnInit {
     const monthly = 220;
     const principal = monthly * (1 - Math.pow(1 + interest / 12, -numMonths)) * 12 / interest;
     console.log(principal);
+  }
+
+  reset(): void {
+    this.car = null;
   }
 
 }

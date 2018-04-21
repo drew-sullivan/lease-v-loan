@@ -1,4 +1,8 @@
-<app-car-form [car]="car" (onSubmitted)="setCar($event)"></app-car-form>
+
+<mat-card *ngIf="car">
+  <button mat-raised-button color="primary" (click)="reset()">Do it again</button>
+</mat-card>
+<app-car-form *ngIf="!car" [car]="car" (onSubmitted)="setCar($event)"></app-car-form>
 
 <div *ngIf="car">
 
