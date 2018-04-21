@@ -18,6 +18,13 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
+        <mat-select placeholder="Interest Rate" ngModel name="interestRate" required>
+          <mat-option *ngFor="let num of interestRateOptions" [value]="num">
+            {{ num }}%
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
         <mat-select placeholder="Loan Duration" ngModel name="loanTermLength" required>
           <mat-option *ngFor="let num of loanTermOptions" [value]="num">
             {{ num }} years
