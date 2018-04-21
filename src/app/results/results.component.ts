@@ -13,6 +13,7 @@ import { HelpersService } from '../services/helpers.service';
 export class ResultsComponent implements OnInit {
 
   car: Car;
+  private objectKeys = Object.keys;
   private loansUndertaken: number;
   private calTableCols = [
     'year', 'jan', 'feb', 'mar', 'apr', 'may', 'june',

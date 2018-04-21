@@ -1,7 +1,13 @@
 
 <mat-card *ngIf="car">
+  <mat-list>
+    <mat-list-item *ngFor="let key of objectKeys(car)">
+      <p mat-line>{{ key + ' : ' + car[key] }}</p>
+    </mat-list-item>
+  </mat-list>
   <button mat-raised-button color="primary" (click)="reset()">Do it again</button>
 </mat-card>
+
 <app-car-form *ngIf="!car" [car]="car" (onSubmitted)="setCar($event)"></app-car-form>
 
 <div *ngIf="car">
