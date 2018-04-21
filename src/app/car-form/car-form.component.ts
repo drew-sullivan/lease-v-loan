@@ -21,6 +21,7 @@ export class CarFormComponent implements OnInit {
   timeFrameOptions: number[];
   ageOptions: string[];
   genderOptions: string[];
+  interestRateOptions: number[];
 
   private submitted: boolean;
 
@@ -28,7 +29,7 @@ export class CarFormComponent implements OnInit {
 
   ngOnInit() {
     this.loadFormOptions();
-    // this.car.emit(new Car(30000, 2000, 5, 3, 220, 50, '20-34', 'female'));
+    // this.car.emit(new Car(30000, 2000, 5, 3, 220, 50, 5, '20-34', 'female'));
   }
 
   loadFormOptions(): void {
@@ -38,6 +39,7 @@ export class CarFormComponent implements OnInit {
     this.leaseTermOptions = this.helperService.generateRangeArray(1, 10, 1);
     this.leaseDealOptions = this.helperService.generateRangeArray(40, 1200, 20);
     this.timeFrameOptions = this.helperService.generateRangeArray(10, 50, 10);
+    this.interestRateOptions = this.helperService.generateRangeArray(0, 12.75, .25);
     this.ageOptions = ['16-19', '20-34', '35-54', '55-64', '65+'];
     this.genderOptions = ['Male', 'Female'];
   }
@@ -51,6 +53,7 @@ export class CarFormComponent implements OnInit {
       carForm.controls['leaseTermLength'].value,
       carForm.controls['leaseDeal'].value,
       carForm.controls['timeFrame'].value,
+      carForm.controls['interestRate'].value,
       carForm.controls['age'].value,
       carForm.controls['gender'].value
     );

@@ -33,6 +33,8 @@ export class ResultsComponent implements OnInit {
   private leaseTotalCost: number;
   private lifetimeLeaseCost: number;
   private numNewCarLeases: number;
+  private neededForMonthlyLoanToEqualMonthlyLease: number;
+  interestRate: number;
 
   private summaryTableDataSource = [];
   private calendarTableDataSource: number[];
@@ -42,11 +44,7 @@ export class ResultsComponent implements OnInit {
 
   constructor(private helpersService: HelpersService) { }
 
-  ngOnInit() {
-    console.log(this.car);
-    this.car = null;
-    this.getMaxLoan();
-  }
+  ngOnInit() { }
 
   loadData() {
     this.loansUndertaken = this.car.timeFrame / 10;
@@ -66,6 +64,10 @@ export class ResultsComponent implements OnInit {
     this.lifetimeLeaseCost = Math.round(this.car.timeFrame * this.leaseYearlyPrice);
     this.numNewCarLeases = Math.round((this.car.timeFrame / this.car.leaseTermLength * 10 )) / 10;
 
+    this.interestRate = this.car.interestRate;
+
+    this.neededForMonthlyLoanToEqualMonthlyLease = this.car.totalPrice - this.getMaxLoan();
+
     this.summaryTableDataSource = this.getSummaryTableData();
 
     const { calendarTableData, grandTotalChartLoanData, grandTotalChartLeaseData } = this.getYearlyData();
@@ -78,9 +80,11 @@ export class ResultsComponent implements OnInit {
     const summaryTableData = [
       { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
       { 'title': 'Monthly Saving for Next Lease Down Payment', 'loan': 0, 'lease': this.savingForNextLease },
+      { 'title': 'Down Payment Needed for Monthly Loan Payment to Equal Monthly Lease Payment',
+          'loan': this.neededForMonthlyLoanToEqualMonthlyLease, 'lease': 0},
       { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice },
-      { 'title': 'Total Cost', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost },
-      { 'title': 'Lifetime Cost', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost },
+      { 'title': 'Total Cost of Current Loan', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost },
+      { 'title': 'Lifetime Cost of Loaning vs. Leasing', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost },
       { 'title': 'New Cars', 'loan': this.numNewCarLoans, 'lease': this.numNewCarLeases },
     ];
     return summaryTableData;
@@ -172,12 +176,12 @@ export class ResultsComponent implements OnInit {
     return depreciationRate;
   }
 
-  getMaxLoan(): void {
-    const numMonths = 60;
-    const interest = .05;
-    const monthly = 220;
-    const principal = monthly * (1 - Math.pow(1 + interest / 12, -numMonths)) * 12 / interest;
-    console.log(principal);
+  getMaxLoan(): number {
+    const numMonths = this.car.loanTermLength * 12;
+    const interest = this.car.interestRate / 100;
+    const leaseMonthlyPayment = this.car.leaseDeal;
+    const principal = Math.round(leaseMonthlyPayment * (1 - Math.pow(1 + interest / 12, -numMonths)) * 12 / interest);
+    return principal;
   }
 
   reset(): void {
