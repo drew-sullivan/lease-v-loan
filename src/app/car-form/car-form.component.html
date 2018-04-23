@@ -25,6 +25,13 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
+        <mat-select placeholder="Trade-in Value" ngModel name="tradeInValue" required>
+          <mat-option *ngFor="let num of tradeInValueOptions" [value]="num">
+            {{ num | currency:'USD':'symbol-narrow':'.0' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
         <mat-select placeholder="Loan Duration" ngModel name="loanTermLength" required>
           <mat-option *ngFor="let num of loanTermOptions" [value]="num">
             {{ num }} years

@@ -9,6 +9,7 @@ export class Car {
         public timeFrame: number,
         public interestRate: number,
         public age: string,
-        public gender: string
+        public gender: string,
+        public tradeInValue: number
     ) { }
 }

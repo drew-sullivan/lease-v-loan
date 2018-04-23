@@ -53,9 +53,7 @@ export class ResultsComponent implements OnInit {
   loadData() {
     this.loansUndertaken = this.car.timeFrame / 10;
 
-    this.loanMonthlyPrice = Math.round(
-      (this.car.totalPrice - this.car.downPayment - this.getTradeInValue()) / (this.car.loanTermLength * 12)
-    );
+    this.loanMonthlyPrice = this.getLoanMonthlyPayment();
     this.loanYearlyPrice = Math.round(this.loanMonthlyPrice * 12);
     this.loanTotalCost = Math.round(this.loanYearlyPrice * this.car.loanTermLength);
     this.lifetimeLoanCost = Math.round(this.loanTotalCost * this.loansUndertaken);
@@ -147,9 +145,22 @@ export class ResultsComponent implements OnInit {
     return finalData;
   }
 
-  setCar(submittedForm: Car) {
+  setCar(submittedForm: Car): void {
     this.car = submittedForm;
     this.loadData();
+  }
+
+  getLoanMonthlyPayment(): number {
+    const numYears = this.car.timeFrame / 10;
+    const loanAmount = 0;
+    let principal = 0;
+    if (numYears > 1) {
+      principal = this.car.totalPrice - this.getTradeInValue() - this.car.downPayment;
+    } else {
+      principal = this.car.totalPrice - this.car.tradeInValue - this.car.downPayment;
+    }
+    return Math.round((this.car.interestRate / 100 / 12 * principal) /
+           (1 - Math.pow(1 + this.car.interestRate / 100 / 12, -this.car.loanTermLength * 12)));
   }
 
   getTradeInValue(): number {

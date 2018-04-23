@@ -9,6 +9,7 @@ export class FormAnswerPipe implements PipeTransform {
     switch (questionName) {
       case 'totalPrice':
       case 'downPayment':
+      case 'tradeInValue':
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
       case 'leaseDeal':
         return `${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value)}/month`;

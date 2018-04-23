@@ -2,7 +2,7 @@
 <mat-card *ngIf="car">
   <mat-list>
     <mat-list-item *ngFor="let key of objectKeys(car)">
-      <p mat-line>{{ key | question }}: {{ car[key] | answer:key }}</p>
+      <p mat-line>{{ key | question }}: <strong>{{ car[key] | answer:key }}</strong></p>
     </mat-list-item>
   </mat-list>
   <button mat-raised-button color="primary" (click)="reset()">Do it again</button>
