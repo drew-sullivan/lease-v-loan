@@ -5,6 +5,9 @@ import { Year } from '../year';
 
 import { HelpersService } from '../services/helpers.service';
 
+import { QuestionPipe } from './../question.pipe';
+import { AnswerPipe } from './../answer.pipe';
+
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
