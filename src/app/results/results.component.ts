@@ -72,8 +72,7 @@ export class ResultsComponent implements OnInit {
 
     this.summaryTableDataSource = this.getSummaryTableData();
 
-    const { calendarTableData, grandTotalChartLoanData, grandTotalChartLeaseData } = this.getYearlyData();
-    this.calendarTableDataSource = calendarTableData;
+    const { grandTotalChartLoanData, grandTotalChartLeaseData } = this.getYearlyData();
     this.grandTotalChartLoanData = grandTotalChartLoanData;
     this.grandTotalChartLeaseData = grandTotalChartLeaseData;
   }
@@ -86,7 +85,7 @@ export class ResultsComponent implements OnInit {
           'loan': this.neededForMonthlyLoanToEqualMonthlyLease, 'lease': 0 },
       { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice },
       { 'title': 'Total Cost of Current Loan', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost },
-      { 'title': 'Estimated Value of Trade-In', 'loan': this.getTradeInValue(), 'lease': 0 }
+      { 'title': 'Estimated Value of Trade-In', 'loan': this.getTradeInValue(), 'lease': 0 },
       { 'title': 'Lifetime Cost of Loaning vs. Leasing', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost },
       { 'title': 'New Cars', 'loan': this.numNewCarLoans, 'lease': this.numNewCarLeases },
     ];
@@ -94,7 +93,6 @@ export class ResultsComponent implements OnInit {
   }
 
   getYearlyData() {
-    const calendarTableData = [];
     const grandTotalChartLoanData = [];
     const grandTotalChartLeaseData = [];
     const months = this.calTableCols.slice(1);
@@ -112,19 +110,13 @@ export class ResultsComponent implements OnInit {
       const leaseYearlyTotal = leaseData.reduce((total, currentValue) => total += currentValue);
       loanGrandTotal += loanYearlyTotal;
       leaseGrandTotal += leaseYearlyTotal;
-      calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
-        { year: k, [m]: loanData[index], 'yearly total': loanYearlyTotal, 'grand total': loanGrandTotal }
-      ))));
-      calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
-        { year: '', [m]: leaseData[index], 'yearly total': leaseYearlyTotal, 'grand total': leaseGrandTotal }
-      ))));
       grandTotalChartLoanData.push(loanGrandTotal);
       grandTotalChartLeaseData.push(leaseGrandTotal);
       i += 12;
       j += 12;
       k += 1;
     }
-    return { calendarTableData, grandTotalChartLoanData, grandTotalChartLeaseData };
+    return { grandTotalChartLoanData, grandTotalChartLeaseData };
   }
 
   getLoanChartData(): number[] {
