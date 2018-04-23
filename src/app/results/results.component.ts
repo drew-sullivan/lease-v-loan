@@ -83,9 +83,10 @@ export class ResultsComponent implements OnInit {
       { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
       { 'title': 'Monthly Saving for Next Lease Down Payment', 'loan': 0, 'lease': this.savingForNextLease },
       { 'title': 'Down Payment Needed for Monthly Loan Payment to Equal Monthly Lease Payment',
-          'loan': this.neededForMonthlyLoanToEqualMonthlyLease, 'lease': 0},
+          'loan': this.neededForMonthlyLoanToEqualMonthlyLease, 'lease': 0 },
       { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice },
       { 'title': 'Total Cost of Current Loan', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost },
+      { 'title': 'Estimated Value of Trade-In', 'loan': this.getTradeInValue(), 'lease': 0 }
       { 'title': 'Lifetime Cost of Loaning vs. Leasing', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost },
       { 'title': 'New Cars', 'loan': this.numNewCarLoans, 'lease': this.numNewCarLeases },
     ];
@@ -154,11 +155,7 @@ export class ResultsComponent implements OnInit {
     const numYears = this.car.timeFrame / 10;
     const loanAmount = 0;
     let principal = 0;
-    if (numYears > 1) {
-      principal = this.car.totalPrice - this.getTradeInValue() - this.car.downPayment;
-    } else {
-      principal = this.car.totalPrice - this.car.tradeInValue - this.car.downPayment;
-    }
+    principal = this.car.totalPrice - this.getTradeInValue() - this.car.downPayment;
     return Math.round((this.car.interestRate / 100 / 12 * principal) /
            (1 - Math.pow(1 + this.car.interestRate / 100 / 12, -this.car.loanTermLength * 12)));
   }
