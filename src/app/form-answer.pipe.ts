@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'answer'
 })
-export class AnswerPipe implements PipeTransform {
+export class FormAnswerPipe implements PipeTransform {
 
   transform(value: any, questionName: string): any {
     switch (questionName) {

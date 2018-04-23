@@ -5,8 +5,8 @@ import { Year } from '../year';
 
 import { HelpersService } from '../services/helpers.service';
 
-import { QuestionPipe } from './../question.pipe';
-import { AnswerPipe } from './../answer.pipe';
+import { FormQuestionPipe } from './../form-question.pipe';
+import { FormAnswerPipe } from './../form-answer.pipe';
 
 @Component({
   selector: 'app-results',
