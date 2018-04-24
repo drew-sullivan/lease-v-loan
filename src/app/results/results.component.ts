@@ -68,8 +68,6 @@ export class ResultsComponent implements OnInit {
 
     this.interestRate = this.car.interestRate;
 
-    this.neededForMonthlyLoanToEqualMonthlyLease = this.car.totalPrice - this.getMaxLoan();
-
     this.summaryTableDataSource = this.getSummaryTableData();
 
     const { grandTotalChartLoanData, grandTotalChartLeaseData } = this.getYearlyData();
@@ -81,8 +79,6 @@ export class ResultsComponent implements OnInit {
     const summaryTableData = [
       { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
       { 'title': 'Monthly Saving for Next Lease Down Payment', 'loan': 0, 'lease': this.savingForNextLease },
-      { 'title': 'Down Payment Needed for Monthly Loan Payment to Equal Monthly Lease Payment',
-          'loan': this.neededForMonthlyLoanToEqualMonthlyLease, 'lease': 0 },
       { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice },
       { 'title': 'Total Cost of Current Loan', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost },
       { 'title': 'Estimated Value of Trade-In', 'loan': this.getTradeInValue(), 'lease': 0 },
@@ -175,14 +171,6 @@ export class ResultsComponent implements OnInit {
       }
     }
     return depreciationRate;
-  }
-
-  getMaxLoan(): number {
-    const numMonths = this.car.loanTermLength * 12;
-    const interest = this.car.interestRate / 100;
-    const leaseMonthlyPayment = this.car.leaseDeal;
-    const principal = Math.round(leaseMonthlyPayment * (1 - Math.pow(1 + interest / 12, -numMonths)) * 12 / interest);
-    return principal;
   }
 
   reset(): void {
