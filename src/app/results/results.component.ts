@@ -144,10 +144,7 @@ export class ResultsComponent implements OnInit {
   }
 
   getLoanMonthlyPayment(): number {
-    const numYears = this.car.timeFrame / 10;
-    const loanAmount = 0;
-    let principal = 0;
-    principal = this.car.totalPrice - this.getTradeInValue() - this.car.downPayment;
+    const principal = this.car.totalPrice - this.getTradeInValue() - this.car.downPayment;
     return Math.round((this.car.interestRate / 100 / 12 * principal) /
            (1 - Math.pow(1 + this.car.interestRate / 100 / 12, -this.car.loanTermLength * 12)));
   }
