@@ -1,4 +1,3 @@
-
 <mat-card *ngIf="car">
   <mat-list>
     <mat-list-item *ngFor="let key of objectKeys(car)">
@@ -11,15 +10,8 @@
 <app-car-form *ngIf="!car" [car]="car" (onSubmitted)="setCar($event)"></app-car-form>
 
 <div *ngIf="car">
-
   <div class="mat-elevation-z8">
-    <mat-toolbar>Summary
-      <span class="example-spacer"></span>
-      <button mat-raised-button disabled class="example-icon key-1">&nbsp;</button>
-      <p>&nbsp;= Loan</p>
-      <button mat-raised-button disabled class="example-icon key-2">&nbsp;</button>
-      <p>&nbsp;= Lease</p>
-    </mat-toolbar>
+    <mat-toolbar>Summary</mat-toolbar>
 
     <mat-table #table [dataSource]="summaryTableDataSource">
       <ng-container *ngFor="let sumCol of summaryTableCols; let i = index; let last = last" matColumnDef={{sumCol}}>
@@ -39,18 +31,6 @@
       [loanData]="grandTotalChartLoanData"
       [leaseData]="grandTotalChartLeaseData">
     </app-grand-total-line-chart>
-
-    <mat-toolbar>Payment Information</mat-toolbar>
-    <mat-table #table [dataSource]="calendarTableDataSource">
-      <ng-container *ngFor="let col of calTableCols" matColumnDef={{col}}>
-        <mat-header-cell *matHeaderCellDef>{{ col | uppercase }}</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          {{ col === 'year' ? row[col] : row[col] | currency:'USD':'symbol-narrow':'.0' }}
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="calTableCols"></mat-header-row>
-      <mat-row *matRowDef="let myRowData; columns: calTableCols" class="calendar-table-cols"></mat-row>
-    </mat-table>
   </div>
 
 </div>

@@ -10,6 +10,6 @@ export class Car {
         public interestRate: number,
         public age: string,
         public gender: string,
-        public tradeInValue: number
+        // public tradeInValue: number
     ) { }
 }

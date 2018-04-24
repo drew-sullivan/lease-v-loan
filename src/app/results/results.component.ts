@@ -72,8 +72,7 @@ export class ResultsComponent implements OnInit {
 
     this.summaryTableDataSource = this.getSummaryTableData();
 
-    const { calendarTableData, grandTotalChartLoanData, grandTotalChartLeaseData } = this.getYearlyData();
-    this.calendarTableDataSource = calendarTableData;
+    const { grandTotalChartLoanData, grandTotalChartLeaseData } = this.getYearlyData();
     this.grandTotalChartLoanData = grandTotalChartLoanData;
     this.grandTotalChartLeaseData = grandTotalChartLeaseData;
   }
@@ -83,9 +82,10 @@ export class ResultsComponent implements OnInit {
       { 'title': 'Monthly Cost', 'loan': this.loanMonthlyPrice, 'lease': this.leaseMonthlyPrice },
       { 'title': 'Monthly Saving for Next Lease Down Payment', 'loan': 0, 'lease': this.savingForNextLease },
       { 'title': 'Down Payment Needed for Monthly Loan Payment to Equal Monthly Lease Payment',
-          'loan': this.neededForMonthlyLoanToEqualMonthlyLease, 'lease': 0},
+          'loan': this.neededForMonthlyLoanToEqualMonthlyLease, 'lease': 0 },
       { 'title': 'Yearly Cost', 'loan': this.loanYearlyPrice, 'lease': this.leaseYearlyPrice },
       { 'title': 'Total Cost of Current Loan', 'loan': this.loanTotalCost, 'lease': this.leaseTotalCost },
+      { 'title': 'Estimated Value of Trade-In', 'loan': this.getTradeInValue(), 'lease': 0 },
       { 'title': 'Lifetime Cost of Loaning vs. Leasing', 'loan': this.lifetimeLoanCost, 'lease': this.lifetimeLeaseCost },
       { 'title': 'New Cars', 'loan': this.numNewCarLoans, 'lease': this.numNewCarLeases },
     ];
@@ -93,7 +93,6 @@ export class ResultsComponent implements OnInit {
   }
 
   getYearlyData() {
-    const calendarTableData = [];
     const grandTotalChartLoanData = [];
     const grandTotalChartLeaseData = [];
     const months = this.calTableCols.slice(1);
@@ -111,19 +110,13 @@ export class ResultsComponent implements OnInit {
       const leaseYearlyTotal = leaseData.reduce((total, currentValue) => total += currentValue);
       loanGrandTotal += loanYearlyTotal;
       leaseGrandTotal += leaseYearlyTotal;
-      calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
-        { year: k, [m]: loanData[index], 'yearly total': loanYearlyTotal, 'grand total': loanGrandTotal }
-      ))));
-      calendarTableData.push(Object.assign({}, ...months.map((m, index) => (
-        { year: '', [m]: leaseData[index], 'yearly total': leaseYearlyTotal, 'grand total': leaseGrandTotal }
-      ))));
       grandTotalChartLoanData.push(loanGrandTotal);
       grandTotalChartLeaseData.push(leaseGrandTotal);
       i += 12;
       j += 12;
       k += 1;
     }
-    return { calendarTableData, grandTotalChartLoanData, grandTotalChartLeaseData };
+    return { grandTotalChartLoanData, grandTotalChartLeaseData };
   }
 
   getLoanChartData(): number[] {
@@ -151,14 +144,7 @@ export class ResultsComponent implements OnInit {
   }
 
   getLoanMonthlyPayment(): number {
-    const numYears = this.car.timeFrame / 10;
-    const loanAmount = 0;
-    let principal = 0;
-    if (numYears > 1) {
-      principal = this.car.totalPrice - this.getTradeInValue() - this.car.downPayment;
-    } else {
-      principal = this.car.totalPrice - this.car.tradeInValue - this.car.downPayment;
-    }
+    const principal = this.car.totalPrice - this.getTradeInValue() - this.car.downPayment;
     return Math.round((this.car.interestRate / 100 / 12 * principal) /
            (1 - Math.pow(1 + this.car.interestRate / 100 / 12, -this.car.loanTermLength * 12)));
   }
